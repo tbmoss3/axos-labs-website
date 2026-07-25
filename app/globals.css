@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Axos Labs Color Palette */
+  --color-axos-bg: #0a0a0f;
+  --color-axos-bg-elevated: #111118;
+  --color-axos-bg-surface: #181822;
+  --color-axos-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-axos-border-standard: rgba(255, 255, 255, 0.08);
+  --color-axos-text-primary: #f0f0f5;
+  --color-axos-text-secondary: #a0a0b0;
+  --color-axos-text-muted: #6e6e7e;
+  --color-axos-accent: #7c3aed;
+  --color-axos-accent-hover: #8b5cf6;
+  --color-axos-accent-glow: rgba(124, 58, 237, 0.3);
+  --color-axos-success: #22c55e;
+}
+
+:root {
+  --background: #0a0a0f;
+  --foreground: #f0f0f5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-axos-bg);
+  color: var(--color-axos-text-primary);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-axos-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
