@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MessageSquare, Globe, ExternalLink } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 export function Footer() {
   return (
