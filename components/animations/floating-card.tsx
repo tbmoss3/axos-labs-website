@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface FloatingCardProps {
@@ -17,32 +18,19 @@ export function FloatingCard({
   floatIntensity = 1,
 }: FloatingCardProps) {
   return (
-    <div
+    <motion.div
       className={cn(
-        "relative rounded-xl border border-axos-border-standard bg-axos-bg-elevated/80 backdrop-blur-sm shadow-xl",
+        "relative rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_0_1px_rgba(0,0,0,0.2)] backdrop-blur-sm",
         className
       )}
-      style={{
-        animation: `float ${6 + floatIntensity * 2}s ease-in-out infinite`,
-        animationDelay: `${delay}s`,
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: [0, -12 * floatIntensity, 0] }}
+      transition={{
+        opacity: { duration: 0.6, delay },
+        y: { duration: 6 + floatIntensity * 2, repeat: Infinity, ease: "easeInOut", delay: delay + 0.6 },
       }}
     >
       {children}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-          }
-          50% {
-            transform: translateY(-12px) rotateX(2deg) rotateY(-1deg);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          div {
-            animation: none !important;
-          }
-        }
-      `}</style>
-    </div>
+    </motion.div>
   );
 }

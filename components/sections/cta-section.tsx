@@ -7,12 +7,12 @@ import { ArrowRight } from "lucide-react";
 export function CTASection() {
   return (
     <section className="relative py-24 md:py-40 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Subtle gradient shift at edges */}
+      {/* Subtle ambient glow behind the CTA */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-40"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 0%, rgba(124, 58, 237, 0.08) 100%)",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(124, 58, 237, 0.12) 0%, transparent 70%)",
         }}
       />
 

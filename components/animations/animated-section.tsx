@@ -16,9 +16,8 @@ export function AnimatedSection({
 }: AnimatedSectionProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      initial={{ opacity: 0.01, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.6,
         delay,
@@ -45,8 +44,7 @@ export function StaggerContainer({
   return (
     <motion.div
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
+      animate="visible"
       variants={{
         hidden: {},
         visible: {

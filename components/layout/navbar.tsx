@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -24,20 +24,20 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
-          ? "bg-axos-bg/80 backdrop-blur-xl border-b border-axos-border-subtle"
+          ? "bg-axos-bg/70 backdrop-blur-2xl border-b border-white/[0.06]"
           : "bg-transparent"
       )}
     >
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-0">
-            <span className="text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight">
+          <Link href="/" className="flex items-center gap-0 group">
+            <span className="text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight group-hover:tracking-normal transition-all duration-300">
               Axos
             </span>
-            <span className="text-xl md:text-2xl font-normal text-axos-text-primary tracking-tight">
+            <span className="text-xl md:text-2xl font-light text-axos-accent tracking-tight">
               Labs
             </span>
           </Link>

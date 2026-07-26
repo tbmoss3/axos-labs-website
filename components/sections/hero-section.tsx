@@ -24,8 +24,13 @@ export function HeroSection() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-axos-accent font-medium mb-4 tracking-wide uppercase text-sm"
+              transition={{
+                duration: 0.6,
+                delay: 0.1,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+              className="text-axos-accent font-semibold mb-5 tracking-[0.15em] uppercase text-xs"
+              style={{ letterSpacing: "0.2em" }}
             >
               The Red Hat of Business AI
             </motion.p>
@@ -35,15 +40,17 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.6,
-                delay: 0.1,
+                delay: 0.2,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-semibold tracking-tight leading-[1.1] mb-6"
-              style={{ letterSpacing: "-0.03em" }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-semibold leading-[1.05] mb-7"
+              style={{ letterSpacing: "-0.04em" }}
             >
               Hire an AI Employee
               <br />
-              <span className="text-axos-text-secondary">That Never Sleeps</span>
+              <span className="text-axos-text-secondary">
+                That Never Sleeps
+              </span>
             </motion.h1>
 
             <motion.p
@@ -51,10 +58,10 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.6,
-                delay: 0.2,
+                delay: 0.3,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className="text-base sm:text-lg md:text-xl text-axos-text-secondary max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
+              className="text-base sm:text-lg text-axos-text-secondary max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed"
             >
               Axos Labs installs persistent AI Brains into your business — on your
               hardware, integrated with your systems, operating under your
@@ -66,20 +73,20 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.6,
-                delay: 0.3,
+                delay: 0.4,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-axos-accent-glow"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-axos-accent-glow active:translate-y-0 active:shadow-none"
               >
                 Request a Brain
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-axos-border-standard text-axos-text-primary font-medium hover:bg-axos-bg-surface transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-axos-border-standard text-axos-text-primary font-medium hover:bg-axos-bg-surface/80 hover:border-white/15 transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
                 Learn More
               </Link>

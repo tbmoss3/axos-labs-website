@@ -57,9 +57,9 @@ export function IndustriesSection() {
         >
           {industries.map((industry) => (
             <StaggerItem key={industry.title}>
-              <div className="group p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm hover:border-axos-accent/30 hover:bg-axos-bg-surface/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-axos-accent-glow/10 h-full flex flex-col">
+              <div className="group p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 h-full flex flex-col">
                 <div className="flex items-start justify-between mb-5">
-                  <div className="w-12 h-12 rounded-lg bg-axos-accent/10 border border-axos-accent/20 flex items-center justify-center group-hover:bg-axos-accent/20 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-axos-accent/10 border border-axos-accent/20 flex items-center justify-center group-hover:bg-axos-accent/20 group-hover:scale-105 transition-all duration-500">
                     <industry.icon size={22} className="text-axos-accent" />
                   </div>
                   <span

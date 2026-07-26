@@ -36,7 +36,11 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section className="py-24 md:py-40 px-4 sm:px-6 lg:px-8 bg-axos-bg-elevated/30">
+    <section className="relative py-24 md:py-40 px-4 sm:px-6 lg:px-8">
+      {/* Section divider: horizontal rule before heading */}
+      <div className="max-w-[1280px] mx-auto mb-24 md:mb-32">
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+      </div>
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <h2
@@ -65,9 +69,9 @@ export function HowItWorksSection() {
                   </div>
                 )}
 
-                <div className="relative p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm hover:border-axos-accent/30 hover:bg-axos-bg-surface/50 transition-all duration-300 hover:-translate-y-1">
+                <div className="relative p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500">
                   {/* Number badge */}
-                  <div className="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-axos-accent flex items-center justify-center shadow-lg shadow-axos-accent-glow/30">
+                  <div className="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-gradient-to-br from-axos-accent to-[#a78bfa] flex items-center justify-center shadow-lg shadow-axos-accent-glow/40">
                     <span className="text-xs font-semibold text-white">
                       {step.number}
                     </span>

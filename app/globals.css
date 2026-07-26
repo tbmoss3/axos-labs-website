@@ -5,8 +5,8 @@
 
   /* Axos Labs Color Palette */
   --color-axos-bg: #0a0a0f;
-  --color-axos-bg-elevated: #111118;
-  --color-axos-bg-surface: #181822;
+  --color-axos-bg-elevated: #1c1c27;
+  --color-axos-bg-surface: #252533;
   --color-axos-border-subtle: rgba(255, 255, 255, 0.05);
   --color-axos-border-standard: rgba(255, 255, 255, 0.08);
   --color-axos-text-primary: #f0f0f5;
@@ -25,11 +25,18 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: var(--color-axos-bg);
   color: var(--color-axos-text-primary);
+}
+
+::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: #ffffff;
 }
 
 /* Custom scrollbar */

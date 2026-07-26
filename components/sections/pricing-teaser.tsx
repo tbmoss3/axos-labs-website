@@ -52,7 +52,11 @@ const tiers = [
 
 export function PricingTeaser() {
   return (
-    <section className="py-24 md:py-40 px-4 sm:px-6 lg:px-8 bg-axos-bg-elevated/30">
+    <section className="relative py-24 md:py-40 px-4 sm:px-6 lg:px-8">
+      {/* Section divider: horizontal rule before heading */}
+      <div className="max-w-[1280px] mx-auto mb-24 md:mb-32">
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+      </div>
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <h2
@@ -75,14 +79,14 @@ export function PricingTeaser() {
           {tiers.map((tier) => (
             <StaggerItem key={tier.name} className="h-full">
               <div
-                className={`relative h-full flex flex-col p-6 md:p-8 rounded-xl border transition-all duration-300 hover:-translate-y-1 ${
+                className={`relative h-full flex flex-col p-6 md:p-8 rounded-2xl border transition-all duration-500 hover:-translate-y-1 ${
                   tier.featured
-                    ? "border-axos-accent/40 bg-axos-bg-elevated/80 shadow-xl shadow-axos-accent-glow/10"
-                    : "border-axos-border-standard bg-axos-bg-elevated/50 hover:border-axos-accent/30 hover:shadow-lg hover:shadow-axos-accent-glow/10"
+                    ? "border-axos-accent/40 bg-gradient-to-b from-axos-accent/[0.08] to-axos-accent/[0.02] shadow-[0_8px_32px_-8px_rgba(124,58,237,0.25),inset_0_1px_0_rgba(255,255,255,0.08)]"
+                    : "border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)]"
                 }`}
               >
                 {tier.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-axos-accent text-white text-xs font-medium">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-axos-accent to-axos-accent-hover text-white text-xs font-medium shadow-lg shadow-axos-accent-glow/30">
                     Most Popular
                   </div>
                 )}
