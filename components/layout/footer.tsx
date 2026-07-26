@@ -19,7 +19,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-axos-text-muted leading-relaxed max-w-xs">
-              The Red Hat of Business AI
+              Persistent AI Brains for Business
             </p>
           </div>
 

@@ -60,7 +60,7 @@ export function HeroSection() {
               className="text-axos-accent font-semibold mb-5 tracking-[0.15em] uppercase text-xs"
               style={{ letterSpacing: "0.2em" }}
             >
-              The Red Hat of Business AI
+              Persistent AI Brains for Business
             </motion.p>
 
             <motion.h1

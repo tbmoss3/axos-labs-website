@@ -41,7 +41,7 @@ export default function AboutPage() {
               <p>
                 We are building the anti-cloud-AI. Private, owned, sovereign AI
                 that runs on YOUR hardware, integrated with YOUR systems,
-                operating under YOUR oversight. The Red Hat of Business AI.
+                operating under YOUR oversight.
               </p>
               <p>
                 Our open-core model means you get the benefits of
