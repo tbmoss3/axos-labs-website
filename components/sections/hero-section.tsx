@@ -1,21 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import { GradientMesh } from "@/components/animations/gradient-mesh";
 import { FloatingCard } from "@/components/animations/floating-card";
+import { CountUp } from "@/components/animations/count-up";
 import { Cpu, Clock, Shield } from "lucide-react";
 
 const stats = [
-  { label: "3 Industries Deployed", icon: Cpu },
-  { label: "20+ Hours/Week Saved", icon: Clock },
-  { label: "100% On-Premise Option", icon: Shield },
+  { value: 3, suffix: "", label: "Industries Deployed", icon: Cpu },
+  { value: 20, suffix: "+", label: "Hours/Week Saved", icon: Clock },
+  { value: 100, suffix: "%", label: "On-Premise Option", icon: Shield },
 ];
 
 export function HeroSection() {
+  const reduceMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const meshY = useTransform(scrollY, [0, 800], [0, 160]);
+  const cardsY = useTransform(scrollY, [0, 800], [0, -60]);
+
+  // Live activity ticker — the Brain never sleeps.
+  const [workOrders, setWorkOrders] = useState(1284);
+  useEffect(() => {
+    if (reduceMotion) return;
+    const id = setInterval(
+      () => setWorkOrders((n) => n + 1),
+      3500 + Math.random() * 2500
+    );
+    return () => clearInterval(id);
+  }, [reduceMotion]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <GradientMesh />
+      <motion.div
+        className="absolute inset-0"
+        style={{ y: reduceMotion ? 0 : meshY }}
+      >
+        <GradientMesh />
+      </motion.div>
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
@@ -94,7 +122,10 @@ export function HeroSection() {
           </div>
 
           {/* Right: Floating cards visual */}
-          <div className="relative hidden lg:block h-[500px]">
+          <motion.div
+            className="relative hidden lg:block h-[500px]"
+            style={{ y: reduceMotion ? 0 : cardsY }}
+          >
             <FloatingCard
               delay={0}
               className="absolute top-0 right-0 w-72 p-5"
@@ -116,7 +147,7 @@ export function HeroSection() {
                 </div>
                 <div className="flex justify-between text-xs text-axos-text-muted">
                   <span>Uptime</span>
-                  <span>99.7%</span>
+                  <CountUp value={99.7} decimals={1} suffix="%" />
                 </div>
               </div>
             </FloatingCard>
@@ -134,7 +165,7 @@ export function HeroSection() {
                 </span>
               </div>
               <div className="text-3xl font-semibold text-axos-text-primary mb-1">
-                20+ hrs
+                <CountUp value={20} suffix="+ hrs" />
               </div>
               <div className="text-xs text-axos-text-muted">
                 Weekly automation impact
@@ -147,15 +178,24 @@ export function HeroSection() {
             >
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-axos-success" />
+                  <span className="relative flex w-2 h-2">
+                    <span className="absolute inline-flex w-full h-full rounded-full bg-axos-success opacity-60 animate-ping" />
+                    <span className="relative inline-flex w-2 h-2 rounded-full bg-axos-success" />
+                  </span>
                   <span className="text-xs text-axos-text-secondary">
                     Work Orders Processed
+                  </span>
+                  <span className="ml-auto text-xs font-medium text-axos-text-primary tabular-nums">
+                    {workOrders.toLocaleString("en-US")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-axos-accent" />
                   <span className="text-xs text-axos-text-secondary">
-                    Vendor Dispatched
+                    Vendors Dispatched
+                  </span>
+                  <span className="ml-auto text-xs font-medium text-axos-text-primary tabular-nums">
+                    312
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -163,10 +203,13 @@ export function HeroSection() {
                   <span className="text-xs text-axos-text-secondary">
                     Documents Filed
                   </span>
+                  <span className="ml-auto text-xs font-medium text-axos-text-primary tabular-nums">
+                    4,096
+                  </span>
                 </div>
               </div>
             </FloatingCard>
-          </div>
+          </motion.div>
         </div>
 
         {/* Stats row */}
@@ -192,6 +235,7 @@ export function HeroSection() {
                 <stat.icon size={18} className="text-axos-accent" />
               </div>
               <span className="text-sm font-medium text-axos-text-secondary">
+                <CountUp value={stat.value} suffix={stat.suffix} />{" "}
                 {stat.label}
               </span>
             </motion.div>

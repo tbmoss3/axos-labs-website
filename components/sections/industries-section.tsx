@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/animations/animated-section";
+import { RevealHeading } from "@/components/animations/reveal-heading";
 import { HardHat, Building2, Truck, Stethoscope } from "lucide-react";
 
 const industries = [
@@ -39,12 +40,11 @@ export function IndustriesSection() {
     <section className="py-24 md:py-40 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <h2
+          <RevealHeading
+            text="Industries We Serve"
             className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
-          >
-            Industries We Serve
-          </h2>
+          />
           <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
             Brains tailored to the workflows, regulation, and systems of each
             vertical.

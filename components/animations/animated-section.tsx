@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
+const viewport = { once: true, margin: "-80px" };
+
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
@@ -17,7 +19,8 @@ export function AnimatedSection({
   return (
     <motion.div
       initial={{ opacity: 0.01, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewport}
       transition={{
         duration: 0.6,
         delay,
@@ -44,7 +47,8 @@ export function StaggerContainer({
   return (
     <motion.div
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={viewport}
       variants={{
         hidden: {},
         visible: {
@@ -70,7 +74,7 @@ export function StaggerItem({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0.01, y: 30 },
         visible: {
           opacity: 1,
           y: 0,

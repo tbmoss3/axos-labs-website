@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/animations/animated-section";
+import { RevealHeading } from "@/components/animations/reveal-heading";
 import { Check, ArrowRight } from "lucide-react";
 
 const tiers = [
@@ -52,19 +53,14 @@ const tiers = [
 
 export function PricingTeaser() {
   return (
-    <section className="relative py-24 md:py-40 px-4 sm:px-6 lg:px-8">
-      {/* Section divider: horizontal rule before heading */}
-      <div className="max-w-[1280px] mx-auto mb-24 md:mb-32">
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-      </div>
+    <section className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <h2
+          <RevealHeading
+            text="Custom Software + AI Brain Packages"
             className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
-          >
-            Custom Software + AI Brain Packages
-          </h2>
+          />
           <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
             Transparent pricing for real AI employees. Setup covers
             configuration, integration, and training. Monthly covers operation

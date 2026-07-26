@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/animations/animated-section";
+import { RevealHeading } from "@/components/animations/reveal-heading";
 import { Plug, Brain, Zap } from "lucide-react";
 
 const features = [
@@ -30,12 +31,11 @@ export function WhatIsBrainSection() {
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-axos-accent/40 to-transparent mx-auto mb-6" />
-          <h2
+          <RevealHeading
+            text="What Is a Brain?"
             className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
-          >
-            What Is a Brain?
-          </h2>
+          />
           <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
             A Brain is not a chatbot. Not a copilot. It is a persistent AI
             employee that lives inside your business, connects to your systems,
