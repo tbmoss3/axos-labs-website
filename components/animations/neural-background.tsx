@@ -75,7 +75,7 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
       const { width, height } = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, width, height);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(139, 92, 246, 0.06)";
+      ctx.strokeStyle = "rgba(139, 92, 246, 0.11)";
       ctx.beginPath();
       for (const [a, b] of edges) {
         ctx.moveTo(nodes[a].x, nodes[a].y);
@@ -83,14 +83,14 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
       }
       ctx.stroke();
       for (const n of nodes) {
-        const twinkle = 0.2 + 0.13 * Math.sin(now / 1400 + n.phase);
+        const twinkle = 0.32 + 0.16 * Math.sin(now / 1400 + n.phase);
         ctx.beginPath();
         ctx.fillStyle = `rgba(167, 139, 250, ${twinkle.toFixed(3)})`;
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fill();
         if (n.flash > 0) {
           const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 14);
-          g.addColorStop(0, `rgba(196, 181, 253, ${(0.5 * n.flash).toFixed(3)})`);
+          g.addColorStop(0, `rgba(196, 181, 253, ${(0.7 * n.flash).toFixed(3)})`);
           g.addColorStop(1, "rgba(196, 181, 253, 0)");
           ctx.fillStyle = g;
           ctx.beginPath();
@@ -115,9 +115,9 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
       for (const n of nodes) n.flash = Math.max(0, n.flash - dt * 1.8);
 
       spawnTimer -= dt;
-      if (spawnTimer <= 0 && pulses.length < 7) {
+      if (spawnTimer <= 0 && pulses.length < 20) {
         spawnPulse();
-        spawnTimer = 0.35 + Math.random() * 0.5;
+        spawnTimer = 0.1 + Math.random() * 0.2;
       }
 
       const arrived: Pulse[] = [];
@@ -131,7 +131,7 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
       for (const p of arrived) {
         pulses.splice(pulses.indexOf(p), 1);
         nodes[p.to].flash = 1;
-        if (Math.random() < 0.55) spawnPulse(p.to, p.from);
+        if (Math.random() < 0.65) spawnPulse(p.to, p.from);
       }
 
       drawNetwork(now);
@@ -146,16 +146,16 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
         const ty = a.y + (b.y - a.y) * tailT;
         const grad = ctx.createLinearGradient(tx, ty, x, y);
         grad.addColorStop(0, "rgba(139, 92, 246, 0)");
-        grad.addColorStop(1, "rgba(196, 181, 253, 0.55)");
+        grad.addColorStop(1, "rgba(196, 181, 253, 0.8)");
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.4;
+        ctx.lineWidth = 1.6;
         ctx.beginPath();
         ctx.moveTo(tx, ty);
         ctx.lineTo(x, y);
         ctx.stroke();
         ctx.beginPath();
-        ctx.fillStyle = "rgba(221, 214, 254, 0.85)";
-        ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(221, 214, 254, 0.95)";
+        ctx.arc(x, y, 1.9, 0, Math.PI * 2);
         ctx.fill();
       }
 
