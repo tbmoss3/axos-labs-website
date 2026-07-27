@@ -2,12 +2,21 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -33,7 +42,11 @@ export function Navbar() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-0 group">
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            className="flex items-center gap-0 group"
+          >
             <span className="text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight group-hover:tracking-normal transition-all duration-300">
               Axos
             </span>

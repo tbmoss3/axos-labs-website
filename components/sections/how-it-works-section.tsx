@@ -121,7 +121,7 @@ export function HowItWorksSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {steps.map((step, index) => (
-            <div key={step.number} className="hiw-card relative group">
+            <div key={step.number} className="hiw-card relative group h-full">
               {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="hiw-connector hidden lg:block absolute top-8 left-full w-full h-px bg-axos-border-standard">
@@ -129,7 +129,7 @@ export function HowItWorksSection() {
                 </div>
               )}
 
-              <div className="relative p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500">
+              <div className="relative h-full flex flex-col p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500">
                 {/* Number badge */}
                 <div className="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-gradient-to-br from-axos-accent to-[#a78bfa] flex items-center justify-center shadow-lg shadow-axos-accent-glow/40">
                   <span className="text-xs font-semibold text-white">

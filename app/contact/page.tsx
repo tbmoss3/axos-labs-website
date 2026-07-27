@@ -5,7 +5,7 @@ import { CTASection } from "@/components/sections/cta-section";
 
 export default function ContactPage() {
   return (
-    <div>
+    <div className="pt-20">
       <IntakeForm />
       <CTASection />
     </div>

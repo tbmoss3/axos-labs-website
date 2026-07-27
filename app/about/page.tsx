@@ -33,7 +33,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-6 text-base md:text-lg text-axos-text-secondary leading-relaxed">
               <p>
-                Every company with 50 to 500 employees deserves an AI Brain — a
+                Every company deserves an AI Brain — a
                 persistent, autonomous worker that understands their business,
                 connects to their systems, and handles the repetitive work that
                 slows teams down.
@@ -122,7 +122,7 @@ export default function AboutPage() {
             <AnimatedSection delay={0.1}>
               <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm">
                 <div className="text-sm font-medium text-axos-accent mb-2">
-                  Simmons & Harris
+                  Real Estate Client
                 </div>
                 <div className="text-2xl font-semibold text-axos-text-primary mb-2">
                   Live Brain Since 2026
@@ -138,14 +138,14 @@ export default function AboutPage() {
             <AnimatedSection delay={0.2}>
               <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm">
                 <div className="text-sm font-medium text-axos-accent mb-2">
-                  Premier Warehousing
+                  Logistics Client
                 </div>
                 <div className="text-2xl font-semibold text-axos-text-primary mb-2">
                   In Build
                 </div>
                 <p className="text-sm text-axos-text-secondary leading-relaxed">
                   Agentic yard management system under development. Logistics
-                  vertical expansion through YardLogic partnership.
+                  vertical expansion in progress.
                 </p>
               </div>
             </AnimatedSection>
@@ -157,9 +157,9 @@ export default function AboutPage() {
                 Pipeline
               </div>
               <p className="text-sm text-axos-text-secondary leading-relaxed">
-                3+ prospects requesting a Simmons & Harris-style Brain for their
-                real estate operations. Active conversations in construction and
-                logistics verticals.
+                3+ prospects requesting a similar Brain for their real estate
+                operations. Active conversations in construction and logistics
+                verticals.
               </p>
             </div>
           </AnimatedSection>

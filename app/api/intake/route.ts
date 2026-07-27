@@ -10,7 +10,6 @@ interface IntakePayload {
   workflows?: string;
   hoursPerWeek?: string;
   deployment?: string;
-  budgetRange?: string;
   email: string;
   phone?: string;
 }
@@ -81,18 +80,11 @@ export async function POST(request: Request) {
         }
       );
     } else {
-      fields.push(
-        {
-          name: "Problem Description",
-          value: body.problemDescription || "Not provided",
-          inline: false,
-        },
-        {
-          name: "Budget Range",
-          value: body.budgetRange || "Not provided",
-          inline: true,
-        }
-      );
+      fields.push({
+        name: "Problem Description",
+        value: body.problemDescription || "Not provided",
+        inline: false,
+      });
     }
 
     const embed = {

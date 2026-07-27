@@ -24,7 +24,6 @@ interface FormData {
   workflows: string;
   hoursPerWeek: string;
   deployment: string;
-  budgetRange: string;
   email: string;
   phone: string;
 }
@@ -39,7 +38,6 @@ const initialFormData: FormData = {
   workflows: "",
   hoursPerWeek: "",
   deployment: "",
-  budgetRange: "",
   email: "",
   phone: "",
 };
@@ -62,14 +60,6 @@ const companySizes = [
   "101-250",
   "251-500",
   "500+",
-];
-
-const budgetRanges = [
-  "Under $10K",
-  "$10K-50K",
-  "$50K-100K",
-  "$100K+",
-  "Not sure",
 ];
 
 const deploymentOptions = [
@@ -99,7 +89,6 @@ export function IntakeForm() {
     if (formData.type === "software") {
       if (!formData.problemDescription.trim())
         newErrors.problemDescription = "Please describe the problem";
-      if (!formData.budgetRange) newErrors.budgetRange = "Budget range is required";
     } else {
       if (!formData.workflows.trim())
         newErrors.workflows = "Please describe the workflows";
@@ -449,37 +438,6 @@ export function IntakeForm() {
                       )}
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-axos-text-secondary mb-2">
-                        Budget Range *
-                      </label>
-                      <div className="relative">
-                        <select
-                          value={formData.budgetRange}
-                          onChange={(e) =>
-                            handleChange("budgetRange", e.target.value)
-                          }
-                          className={`${inputClass("budgetRange")} appearance-none cursor-pointer`}
-                        >
-                          <option value="">Select budget</option>
-                          {budgetRanges.map((b) => (
-                            <option key={b} value={b}>
-                              {b}
-                            </option>
-                          ))}
-                        </select>
-                        <ChevronDown
-                          size={16}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-axos-text-muted pointer-events-none"
-                        />
-                      </div>
-                      {errors.budgetRange && (
-                        <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
-                          <AlertCircle size={12} />
-                          {errors.budgetRange}
-                        </p>
-                      )}
-                    </div>
                   </motion.div>
                 ) : (
                   <motion.div

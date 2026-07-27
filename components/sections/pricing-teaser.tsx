@@ -7,8 +7,6 @@ import { Check, ArrowRight } from "lucide-react";
 const tiers = [
   {
     name: "Standard",
-    setup: "$25K",
-    monthly: "$5K/mo",
     description: "Perfect for single-location operations with 10–50 employees.",
     features: [
       "Single Brain instance",
@@ -20,8 +18,6 @@ const tiers = [
   },
   {
     name: "Premium",
-    setup: "$75K",
-    monthly: "$12K/mo",
     description:
       "For multi-location businesses with 50–250 employees and complex workflows.",
     features: [
@@ -35,8 +31,6 @@ const tiers = [
   },
   {
     name: "Strategic",
-    setup: "$150K+",
-    monthly: "$25K+/mo",
     description:
       "Enterprise deployment for 250+ employees. Dedicated FDE, custom R&D.",
     features: [
@@ -62,9 +56,10 @@ export function PricingTeaser() {
             style={{ letterSpacing: "-0.02em" }}
           />
           <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
-            Transparent pricing for real AI employees. Setup covers
-            configuration, integration, and training. Monthly covers operation
-            and continuous improvement.
+            Packages sized to your operation. Setup covers configuration,
+            integration, and training. Ongoing service covers operation and
+            continuous improvement. Talk to us for a quote tailored to your
+            business.
           </p>
         </AnimatedSection>
 
@@ -88,18 +83,9 @@ export function PricingTeaser() {
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-xl font-medium text-axos-text-primary mb-2">
+                  <h3 className="text-2xl font-semibold text-axos-text-primary mb-3">
                     {tier.name}
                   </h3>
-                  <div className="flex items-baseline gap-2 mb-3">
-                    <span className="text-3xl font-semibold text-axos-text-primary">
-                      {tier.setup}
-                    </span>
-                    <span className="text-sm text-axos-text-muted">setup</span>
-                  </div>
-                  <div className="text-sm text-axos-accent font-medium mb-4">
-                    + {tier.monthly}
-                  </div>
                   <p className="text-sm text-axos-text-secondary leading-relaxed">
                     {tier.description}
                   </p>

@@ -9,6 +9,7 @@ interface Node {
   r: number;
   phase: number;
   flash: number;
+  hub: boolean;
   neighbors: number[];
 }
 
@@ -41,34 +42,104 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
     let spawnTimer = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
+    // Hive-mind topology: ganglia (a hub neuron surrounded by a swarm of
+    // satellites, densely interlinked) connected to neighboring ganglia by
+    // long fibers. Activity radiates from hubs, so the network reads as one
+    // collective organism instead of random scatter.
     const build = () => {
       const { width, height } = canvas.getBoundingClientRect();
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.max(30, Math.min(90, Math.floor((width * height) / 16000)));
-      nodes = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: 1 + Math.random() * 1.4,
-        phase: Math.random() * Math.PI * 2,
-        flash: 0,
-        neighbors: [],
-      }));
+      nodes = [];
       edges = [];
-      const linkDist = 150;
-      for (let i = 0; i < count; i++) {
-        for (let j = i + 1; j < count; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          if (Math.hypot(dx, dy) < linkDist) {
-            edges.push([i, j]);
-            nodes[i].neighbors.push(j);
-            nodes[j].neighbors.push(i);
-          }
+      pulses = [];
+
+      const clusterCount = Math.max(4, Math.min(9, Math.round(width / 220)));
+      const cx = width / 2;
+      const cy = height / 2;
+      const centers = Array.from({ length: clusterCount }, (_, i) => {
+        const angle =
+          (i / clusterCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
+        return {
+          x: cx + Math.cos(angle) * width * 0.36 * (0.6 + Math.random() * 0.55),
+          y: cy + Math.sin(angle) * height * 0.34 * (0.6 + Math.random() * 0.55),
+        };
+      });
+
+      const satPerCluster = Math.max(
+        6,
+        Math.min(13, Math.floor((width * height) / 16000 / clusterCount))
+      );
+      const spread = Math.min(width, height) * 0.17;
+      const hubIdx: number[] = [];
+      for (const c of centers) {
+        hubIdx.push(nodes.length);
+        nodes.push({
+          x: c.x,
+          y: c.y,
+          r: 2.6 + Math.random() * 0.9,
+          phase: Math.random() * Math.PI * 2,
+          flash: 0,
+          hub: true,
+          neighbors: [],
+        });
+        for (let s = 0; s < satPerCluster; s++) {
+          const ang = Math.random() * Math.PI * 2;
+          const rad = spread * ((Math.random() + Math.random()) / 2);
+          nodes.push({
+            x: c.x + Math.cos(ang) * rad,
+            y: c.y + Math.sin(ang) * rad,
+            r: 1 + Math.random() * 1.3,
+            phase: Math.random() * Math.PI * 2,
+            flash: 0,
+            hub: false,
+            neighbors: [],
+          });
         }
       }
-      pulses = [];
+
+      const link = (a: number, b: number) => {
+        edges.push([a, b]);
+        nodes[a].neighbors.push(b);
+        nodes[b].neighbors.push(a);
+      };
+
+      // Intra-cluster: every satellite to its hub, plus nearby satellites
+      hubIdx.forEach((hub) => {
+        const start = hub + 1;
+        const end = hub + satPerCluster;
+        for (let i = start; i <= end; i++) {
+          link(hub, i);
+          for (let j = i + 1; j <= end; j++) {
+            const d = Math.hypot(
+              nodes[i].x - nodes[j].x,
+              nodes[i].y - nodes[j].y
+            );
+            if (d < spread * 0.55) link(i, j);
+          }
+        }
+      });
+
+      // Inter-cluster fibers: each hub to its 2 nearest fellow hubs
+      const fibers = new Set<string>();
+      for (const h of hubIdx) {
+        hubIdx
+          .filter((o) => o !== h)
+          .map((o) => ({
+            o,
+            d: Math.hypot(nodes[h].x - nodes[o].x, nodes[h].y - nodes[o].y),
+          }))
+          .sort((p, q) => p.d - q.d)
+          .slice(0, 2)
+          .forEach(({ o }) => {
+            const key = h < o ? `${h}-${o}` : `${o}-${h}`;
+            if (!fibers.has(key)) {
+              fibers.add(key);
+              link(h, o);
+            }
+          });
+      }
     };
 
     const drawNetwork = (now: number) => {
@@ -84,6 +155,17 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
       ctx.stroke();
       for (const n of nodes) {
         const twinkle = 0.32 + 0.16 * Math.sin(now / 1400 + n.phase);
+        if (n.hub) {
+          // Hubs breathe: a soft halo marks each ganglion's center
+          const halo = 0.1 + 0.06 * Math.sin(now / 1800 + n.phase);
+          const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 26);
+          g.addColorStop(0, `rgba(167, 139, 250, ${halo.toFixed(3)})`);
+          g.addColorStop(1, "rgba(167, 139, 250, 0)");
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 26, 0, Math.PI * 2);
+          ctx.fill();
+        }
         ctx.beginPath();
         ctx.fillStyle = `rgba(167, 139, 250, ${twinkle.toFixed(3)})`;
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
@@ -101,7 +183,17 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
     };
 
     const spawnPulse = (from?: number, exclude?: number) => {
-      const start = from ?? Math.floor(Math.random() * nodes.length);
+      // Bias half of spontaneous firings to start at a hub, so activity
+      // radiates outward from the ganglia centers
+      let start = from;
+      if (start === undefined) {
+        if (Math.random() < 0.5) {
+          const hubs = nodes.filter((n) => n.hub);
+          start = nodes.indexOf(hubs[Math.floor(Math.random() * hubs.length)]);
+        } else {
+          start = Math.floor(Math.random() * nodes.length);
+        }
+      }
       const options = nodes[start]?.neighbors.filter((n) => n !== exclude);
       if (!options || options.length === 0) return;
       const to = options[Math.floor(Math.random() * options.length)];

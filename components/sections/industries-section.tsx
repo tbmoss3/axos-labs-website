@@ -16,14 +16,14 @@ const industries = [
     icon: Building2,
     title: "Real Estate",
     description:
-      "Work orders, tenant screening, court filings, invoicing — our first vertical. Simmons & Harris: live brain since 2026.",
+      "Work orders, tenant screening, court filings, invoicing — our first vertical, live in production since 2026.",
     status: "Live",
   },
   {
     icon: Truck,
     title: "Logistics",
     description:
-      "Yard management, dispatch coordination, inventory sync — Premier Warehousing/YardLogic in progress.",
+      "Yard management, dispatch coordination, inventory sync — logistics deployment in build.",
     status: "In Build",
   },
   {
