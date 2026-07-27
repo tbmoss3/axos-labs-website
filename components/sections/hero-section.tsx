@@ -65,9 +65,9 @@ export function HeroSection() {
             }}
             className="text-base sm:text-lg md:text-xl text-axos-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Axos Labs installs persistent AI Brains — AI employees that never
-            sleep — on your hardware, integrated with your systems, operating
-            under your oversight.
+            Axos Labs deploys both custom and open-source software to fully
+            integrate your business&#39;s intelligence into one AI-native
+            platform.
           </motion.p>
 
           <motion.div
@@ -84,7 +84,7 @@ export function HeroSection() {
               href="/contact"
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-axos-accent-glow active:translate-y-0 active:shadow-none"
             >
-              Request a Brain
+              Contact Us
             </Link>
             <Link
               href="/about"

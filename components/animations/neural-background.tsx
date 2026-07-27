@@ -20,6 +20,52 @@ interface Pulse {
   speed: number;
 }
 
+// Side-profile brain silhouette (facing left), normalized to a unit box:
+// cerebrum dome, occipital lobe, cerebellum bump, and brainstem.
+const BRAIN_OUTLINE: [number, number][] = [
+  [0.1, 0.52],
+  [0.06, 0.4],
+  [0.08, 0.28],
+  [0.16, 0.16],
+  [0.28, 0.08],
+  [0.42, 0.04],
+  [0.56, 0.03],
+  [0.68, 0.06],
+  [0.8, 0.12],
+  [0.88, 0.22],
+  [0.93, 0.34],
+  [0.94, 0.45],
+  [0.9, 0.55],
+  [0.92, 0.6],
+  [0.88, 0.72],
+  [0.78, 0.78],
+  [0.68, 0.76],
+  [0.63, 0.7],
+  [0.6, 0.8],
+  [0.55, 0.86],
+  [0.52, 0.78],
+  [0.5, 0.7],
+  [0.42, 0.72],
+  [0.3, 0.7],
+  [0.2, 0.64],
+  [0.13, 0.58],
+];
+
+function pointInPoly(x: number, y: number, poly: [number, number][]) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i];
+    const [xj, yj] = poly[j];
+    if (
+      yi > y !== yj > y &&
+      x < ((xj - xi) * (y - yi)) / (yj - yi) + xi
+    ) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
 // Ambient simulation of neural activity: a faint synaptic network with
 // electrical pulses that travel along connections, flash the receiving
 // neuron, and often chain-fire onward. Reduced motion renders the static
@@ -36,16 +82,17 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
 
     let nodes: Node[] = [];
     let edges: [number, number][] = [];
+    let outlineEdgeCount = 0;
     let pulses: Pulse[] = [];
     let raf = 0;
     let last = 0;
     let spawnTimer = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    // Hive-mind topology: ganglia (a hub neuron surrounded by a swarm of
-    // satellites, densely interlinked) connected to neighboring ganglia by
-    // long fibers. Activity radiates from hubs, so the network reads as one
-    // collective organism instead of random scatter.
+    // The whole network forms a single brain. The silhouette is traced by a
+    // chain of neurons so the shape reads clearly; the interior keeps the
+    // hive structure (hub ganglia + satellite swarms + fibers), with every
+    // node constrained inside the silhouette.
     const build = () => {
       const { width, height } = canvas.getBoundingClientRect();
       canvas.width = width * dpr;
@@ -55,49 +102,13 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
       edges = [];
       pulses = [];
 
-      const clusterCount = Math.max(4, Math.min(9, Math.round(width / 220)));
-      const cx = width / 2;
-      const cy = height / 2;
-      const centers = Array.from({ length: clusterCount }, (_, i) => {
-        const angle =
-          (i / clusterCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
-        return {
-          x: cx + Math.cos(angle) * width * 0.36 * (0.6 + Math.random() * 0.55),
-          y: cy + Math.sin(angle) * height * 0.34 * (0.6 + Math.random() * 0.55),
-        };
-      });
-
-      const satPerCluster = Math.max(
-        6,
-        Math.min(13, Math.floor((width * height) / 16000 / clusterCount))
-      );
-      const spread = Math.min(width, height) * 0.17;
-      const hubIdx: number[] = [];
-      for (const c of centers) {
-        hubIdx.push(nodes.length);
-        nodes.push({
-          x: c.x,
-          y: c.y,
-          r: 2.6 + Math.random() * 0.9,
-          phase: Math.random() * Math.PI * 2,
-          flash: 0,
-          hub: true,
-          neighbors: [],
-        });
-        for (let s = 0; s < satPerCluster; s++) {
-          const ang = Math.random() * Math.PI * 2;
-          const rad = spread * ((Math.random() + Math.random()) / 2);
-          nodes.push({
-            x: c.x + Math.cos(ang) * rad,
-            y: c.y + Math.sin(ang) * rad,
-            r: 1 + Math.random() * 1.3,
-            phase: Math.random() * Math.PI * 2,
-            flash: 0,
-            hub: false,
-            neighbors: [],
-          });
-        }
-      }
+      // Fit the silhouette (normalized bbox ~0.88 x 0.83) into the viewport
+      const scale = Math.min((width * 0.82) / 0.88, (height * 0.84) / 0.83);
+      const poly: [number, number][] = BRAIN_OUTLINE.map(([px, py]) => [
+        width / 2 + (px - 0.5) * scale,
+        height / 2 + (py - 0.445) * scale,
+      ]);
+      const inside = (x: number, y: number) => pointInPoly(x, y, poly);
 
       const link = (a: number, b: number) => {
         edges.push([a, b]);
@@ -105,23 +116,93 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
         nodes[b].neighbors.push(a);
       };
 
-      // Intra-cluster: every satellite to its hub, plus nearby satellites
-      hubIdx.forEach((hub) => {
-        const start = hub + 1;
-        const end = hub + satPerCluster;
-        for (let i = start; i <= end; i++) {
+      // 1) Outline: neurons spaced along the perimeter, chained together
+      const outlineIdx: number[] = [];
+      const step = scale * 0.045;
+      for (let i = 0; i < poly.length; i++) {
+        const [x1, y1] = poly[i];
+        const [x2, y2] = poly[(i + 1) % poly.length];
+        const segLen = Math.hypot(x2 - x1, y2 - y1);
+        const n = Math.max(1, Math.round(segLen / step));
+        for (let k = 0; k < n; k++) {
+          const t = k / n;
+          outlineIdx.push(nodes.length);
+          nodes.push({
+            x: x1 + (x2 - x1) * t,
+            y: y1 + (y2 - y1) * t,
+            r: 1 + Math.random() * 1.1,
+            phase: Math.random() * Math.PI * 2,
+            flash: 0,
+            hub: false,
+            neighbors: [],
+          });
+        }
+      }
+      for (let i = 0; i < outlineIdx.length; i++) {
+        link(outlineIdx[i], outlineIdx[(i + 1) % outlineIdx.length]);
+      }
+      outlineEdgeCount = edges.length;
+      const outlineSet = new Set(outlineIdx);
+
+      // 2) Interior ganglia: hubs + satellite swarms, all inside the brain
+      const sampleInside = (): [number, number] | null => {
+        for (let t = 0; t < 200; t++) {
+          const x = width / 2 + (Math.random() - 0.5) * 0.88 * scale;
+          const y = height / 2 + (Math.random() - 0.5) * 0.83 * scale;
+          if (inside(x, y)) return [x, y];
+        }
+        return null;
+      };
+
+      const clusterCount = 7;
+      const satPerCluster = 9;
+      const spread = scale * 0.14;
+      const hubIdx: number[] = [];
+      for (let c = 0; c < clusterCount; c++) {
+        const center = sampleInside();
+        if (!center) continue;
+        const hub = nodes.length;
+        hubIdx.push(hub);
+        nodes.push({
+          x: center[0],
+          y: center[1],
+          r: 2.6 + Math.random() * 0.9,
+          phase: Math.random() * Math.PI * 2,
+          flash: 0,
+          hub: true,
+          neighbors: [],
+        });
+        let placed = 0;
+        for (let s = 0; s < satPerCluster * 4 && placed < satPerCluster; s++) {
+          const ang = Math.random() * Math.PI * 2;
+          const rad = spread * ((Math.random() + Math.random()) / 2);
+          const x = center[0] + Math.cos(ang) * rad;
+          const y = center[1] + Math.sin(ang) * rad;
+          if (!inside(x, y)) continue;
+          nodes.push({
+            x,
+            y,
+            r: 1 + Math.random() * 1.3,
+            phase: Math.random() * Math.PI * 2,
+            flash: 0,
+            hub: false,
+            neighbors: [],
+          });
+          placed++;
+        }
+        for (let i = hub + 1; i <= hub + placed; i++) {
           link(hub, i);
-          for (let j = i + 1; j <= end; j++) {
+          for (let j = i + 1; j <= hub + placed; j++) {
             const d = Math.hypot(
               nodes[i].x - nodes[j].x,
               nodes[i].y - nodes[j].y
             );
-            if (d < spread * 0.55) link(i, j);
+            if (d < spread * 0.6) link(i, j);
           }
         }
-      });
+      }
 
-      // Inter-cluster fibers: each hub to its 2 nearest fellow hubs
+      // 3) Fibers between hubs: each hub to its 2 nearest fellow hubs
       const fibers = new Set<string>();
       for (const h of hubIdx) {
         hubIdx
@@ -140,15 +221,42 @@ export function NeuralBackground({ className = "" }: { className?: string }) {
             }
           });
       }
+
+      // 4) Stitch outline to interior so silhouette and core fire as one
+      for (let i = 0; i < outlineIdx.length; i += 3) {
+        const o = outlineIdx[i];
+        let best = -1;
+        let bestD = scale * 0.22;
+        for (let j = 0; j < nodes.length; j++) {
+          if (outlineSet.has(j)) continue;
+          const d = Math.hypot(nodes[j].x - nodes[o].x, nodes[j].y - nodes[o].y);
+          if (d < bestD) {
+            bestD = d;
+            best = j;
+          }
+        }
+        if (best >= 0) link(o, best);
+      }
     };
 
     const drawNetwork = (now: number) => {
       const { width, height } = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, width, height);
+      // Silhouette edges drawn brighter than interior wiring so the brain
+      // shape stays legible
       ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(167, 139, 250, 0.22)";
+      ctx.beginPath();
+      for (let e = 0; e < outlineEdgeCount; e++) {
+        const [a, b] = edges[e];
+        ctx.moveTo(nodes[a].x, nodes[a].y);
+        ctx.lineTo(nodes[b].x, nodes[b].y);
+      }
+      ctx.stroke();
       ctx.strokeStyle = "rgba(139, 92, 246, 0.11)";
       ctx.beginPath();
-      for (const [a, b] of edges) {
+      for (let e = outlineEdgeCount; e < edges.length; e++) {
+        const [a, b] = edges[e];
         ctx.moveTo(nodes[a].x, nodes[a].y);
         ctx.lineTo(nodes[b].x, nodes[b].y);
       }

@@ -75,7 +75,7 @@ export function Navbar() {
               href="/contact"
               className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-axos-accent-glow"
             >
-              Get a Brain
+              Contact Us
             </Link>
           </div>
 
@@ -109,7 +109,7 @@ export function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="block w-full text-center px-5 py-3 rounded-lg bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-all"
             >
-              Get a Brain
+              Contact Us
             </Link>
           </div>
         </div>

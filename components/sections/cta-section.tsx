@@ -32,7 +32,7 @@ export function CTASection() {
             href="/contact"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-axos-accent-glow/30 text-base"
           >
-            Request a Brain
+            Contact Us
             <ArrowRight size={18} />
           </Link>
         </AnimatedSection>
