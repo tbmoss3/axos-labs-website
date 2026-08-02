@@ -1,8 +1,14 @@
 "use client";
 
-import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/animations/animated-section";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { AnimatedSection } from "@/components/animations/animated-section";
 import { RevealHeading } from "@/components/animations/reveal-heading";
 import { Check, ArrowRight } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const tiers = [
   {
@@ -46,8 +52,61 @@ const tiers = [
 ];
 
 export function PricingTeaser() {
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      // Desktop: pin the section and scrub the three cards to scroll progress.
+      mm.add(
+        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const cards = gsap.utils.toArray<HTMLElement>(".price-card");
+          gsap.set(cards, { opacity: 0.01, y: 60 });
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container.current,
+              start: "center center",
+              end: "+=1000",
+              pin: true,
+              scrub: 0.6,
+            },
+          });
+          cards.forEach((card) => {
+            tl.to(card, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" });
+          });
+          tl.to({}, { duration: 0.5 });
+        }
+      );
+
+      // Mobile/tablet: simple once-per-card reveal on scroll, no pinning.
+      mm.add(
+        "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          gsap.utils.toArray<HTMLElement>(".price-card").forEach((card) => {
+            gsap.from(card, {
+              opacity: 0.01,
+              y: 30,
+              duration: 0.6,
+              ease: "power2.out",
+              scrollTrigger: { trigger: card, start: "top 85%", once: true },
+            });
+          });
+        }
+      );
+
+      return () => mm.revert();
+    },
+    { scope: container }
+  );
+
   return (
-    <section className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+    <section
+      ref={container}
+      className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <RevealHeading
@@ -63,12 +122,9 @@ export function PricingTeaser() {
           </p>
         </AnimatedSection>
 
-        <StaggerContainer
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch"
-          staggerDelay={0.1}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
           {tiers.map((tier) => (
-            <StaggerItem key={tier.name} className="h-full">
+            <div key={tier.name} className="price-card relative h-full">
               <div
                 className={`relative h-full flex flex-col p-6 md:p-8 rounded-2xl border transition-all duration-500 hover:-translate-y-1 ${
                   tier.featured
@@ -118,9 +174,9 @@ export function PricingTeaser() {
                   <ArrowRight size={14} />
                 </a>
               </div>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
