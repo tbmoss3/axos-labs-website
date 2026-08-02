@@ -26,7 +26,7 @@ export default function AboutPage() {
         <div className="max-w-[1280px] mx-auto">
           <AnimatedSection className="max-w-3xl mx-auto">
             <h2
-              className="text-2xl sm:text-3xl md:text-4xl font-medium text-axos-text-primary mb-8"
+              className="font-serif text-2xl sm:text-3xl md:text-4xl text-axos-text-primary mb-8"
               style={{ letterSpacing: "-0.02em" }}
             >
               OUR MISSION

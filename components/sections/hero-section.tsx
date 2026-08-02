@@ -33,7 +33,7 @@ export function HeroSection() {
               delay: 0.1,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="text-axos-accent font-semibold mb-5 tracking-[0.15em] uppercase text-xs"
+            className="font-serif italic text-axos-accent mb-5 tracking-[0.15em] uppercase text-sm"
             style={{ letterSpacing: "0.2em" }}
           >
             Persistent AI Brains for Business
@@ -47,12 +47,12 @@ export function HeroSection() {
               delay: 0.2,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-semibold leading-[1.05] mb-7"
+            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.05] mb-7"
             style={{ letterSpacing: "-0.04em" }}
           >
             Own Your Company&#39;s
             <br />
-            <span className="text-axos-accent">Intelligence</span>
+            <span className="font-serif italic text-axos-accent">Intelligence</span>
           </motion.h1>
 
           <motion.p

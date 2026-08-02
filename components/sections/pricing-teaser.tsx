@@ -111,7 +111,7 @@ export function PricingTeaser() {
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <RevealHeading
             text="Custom Software + AI Brain Packages"
-            className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-6"
+            className="font-serif text-3xl sm:text-4xl md:text-5xl text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
           />
           <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">

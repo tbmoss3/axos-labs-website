@@ -11,7 +11,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="inline-flex items-center gap-0 group">
-              <span className="text-xl font-bold text-axos-text-primary tracking-tight group-hover:-tracking-tight transition-all duration-300">
+              <span className="font-serif text-xl font-bold text-axos-text-primary tracking-tight group-hover:-tracking-tight transition-all duration-300">
                 Axos
               </span>
               <span className="text-xl font-light text-axos-accent tracking-tight">

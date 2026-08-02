@@ -21,7 +21,7 @@ export function CTASection() {
         <AnimatedSection className="text-center max-w-3xl mx-auto">
           <RevealHeading
             text="Ready to Hire Your First AI Employee?"
-            className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-6"
+            className="font-serif text-3xl sm:text-4xl md:text-5xl text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
           />
           <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed mb-10 max-w-xl mx-auto">

@@ -150,7 +150,7 @@ export function IntakeForm() {
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection>
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-4 text-center"
+            className="font-serif text-3xl sm:text-4xl md:text-5xl text-axos-text-primary mb-4 text-center"
             style={{ letterSpacing: "-0.02em" }}
           >
             Get Started

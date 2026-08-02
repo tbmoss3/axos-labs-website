@@ -47,7 +47,7 @@ export function Navbar() {
             onClick={handleLogoClick}
             className="flex items-center gap-0 group"
           >
-            <span className="text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight group-hover:tracking-normal transition-all duration-300">
+            <span className="font-serif text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight group-hover:tracking-normal transition-all duration-300">
               Axos
             </span>
             <span className="text-xl md:text-2xl font-light text-axos-accent tracking-tight">
