@@ -35,7 +35,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
-          ? "bg-white/80 backdrop-blur-2xl border-b border-black/[0.06] shadow-sm"
+          ? "bg-white/80 backdrop-blur-2xl border-b border-black/[0.06]"
           : "bg-transparent"
       )}
     >
@@ -47,7 +47,7 @@ export function Navbar() {
             onClick={handleLogoClick}
             className="flex items-center gap-0 group"
           >
-            <span className="font-serif text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight group-hover:tracking-normal transition-all duration-300">
+            <span className="font-serif text-xl md:text-2xl font-bold text-axos-text-primary tracking-tight">
               Axos
             </span>
             <span className="text-xl md:text-2xl font-light text-axos-accent tracking-tight">
@@ -61,10 +61,9 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-axos-text-secondary hover:text-axos-text-primary transition-colors relative group"
+                className="text-sm text-axos-text-secondary hover:text-axos-text-primary transition-colors"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-axos-accent group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
           </nav>
@@ -73,7 +72,7 @@ export function Navbar() {
           <div className="hidden md:block">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-axos-accent-glow"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-md bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-colors"
             >
               Contact Us
             </Link>
@@ -99,7 +98,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block text-base font-medium text-axos-text-secondary hover:text-axos-text-primary transition-colors"
+                className="block text-base text-axos-text-secondary hover:text-axos-text-primary transition-colors"
               >
                 {link.label}
               </Link>
@@ -107,7 +106,7 @@ export function Navbar() {
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center px-5 py-3 rounded-lg bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-all"
+              className="block w-full text-center px-5 py-3 rounded-md bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-colors"
             >
               Contact Us
             </Link>

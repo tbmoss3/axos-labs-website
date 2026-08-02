@@ -48,7 +48,6 @@ export function HowItWorksSection() {
     () => {
       const mm = gsap.matchMedia();
 
-      // Desktop: pin the section and scrub the four steps to scroll progress.
       mm.add(
         "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -80,7 +79,6 @@ export function HowItWorksSection() {
         }
       );
 
-      // Mobile/tablet: simple once-per-card reveal on scroll, no pinning.
       mm.add(
         "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -107,13 +105,13 @@ export function HowItWorksSection() {
       className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-[1280px] mx-auto">
-        <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <AnimatedSection className="max-w-3xl mb-16 md:mb-20">
           <RevealHeading
             text="How It Works"
             className="font-serif text-3xl sm:text-4xl md:text-5xl text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
           />
-          <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
+          <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed max-w-2xl">
             From installation to autonomous operation — four steps to your first
             AI employee.
           </p>
@@ -121,7 +119,7 @@ export function HowItWorksSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {steps.map((step, index) => (
-            <div key={step.number} className="hiw-card relative group h-full">
+            <div key={step.number} className="hiw-card relative h-full">
               {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="hiw-connector hidden lg:block absolute top-8 left-full w-full h-px bg-axos-border-standard">
@@ -129,19 +127,16 @@ export function HowItWorksSection() {
                 </div>
               )}
 
-              <div className="relative h-full flex flex-col p-6 md:p-8 rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-500">
-                {/* Number badge */}
-                <div className="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-gradient-to-br from-axos-accent to-[#a78bfa] flex items-center justify-center shadow-lg shadow-axos-accent-glow/40">
-                  <span className="text-xs font-semibold text-white">
-                    {step.number}
-                  </span>
+              <div className="relative h-full flex flex-col p-6 md:p-8 rounded-lg border border-black/[0.08] bg-white hover:border-black/15 transition-colors duration-300">
+                <span className="text-xs font-medium text-axos-text-muted mb-6">
+                  {step.number}
+                </span>
+
+                <div className="w-10 h-10 flex items-center justify-center mb-5">
+                  <step.icon size={22} className="text-axos-text-primary" />
                 </div>
 
-                <div className="w-12 h-12 rounded-lg bg-axos-accent/10 border border-axos-accent/15 flex items-center justify-center mb-5 mt-2 group-hover:bg-axos-accent/15 transition-colors">
-                  <step.icon size={22} className="text-axos-accent" />
-                </div>
-
-                <h3 className="text-xl font-medium text-axos-text-primary mb-3">
+                <h3 className="text-lg font-semibold text-axos-text-primary mb-3">
                   {step.title}
                 </h3>
                 <p className="text-sm text-axos-text-secondary leading-relaxed">

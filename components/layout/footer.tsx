@@ -10,8 +10,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center gap-0 group">
-              <span className="font-serif text-xl font-bold text-axos-text-primary tracking-tight group-hover:-tracking-tight transition-all duration-300">
+            <Link href="/" className="inline-flex items-center gap-0">
+              <span className="font-serif text-xl font-bold text-axos-text-primary tracking-tight">
                 Axos
               </span>
               <span className="text-xl font-light text-axos-accent tracking-tight">
@@ -25,7 +25,7 @@ export function Footer() {
 
           {/* Links */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-axos-text-primary uppercase tracking-wider">
+            <h4 className="text-sm font-medium text-axos-text-primary uppercase tracking-wider">
               Navigation
             </h4>
             <nav className="flex flex-col gap-3">
@@ -52,27 +52,27 @@ export function Footer() {
 
           {/* Social */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-axos-text-primary uppercase tracking-wider">
+            <h4 className="text-sm font-medium text-axos-text-primary uppercase tracking-wider">
               Connect
             </h4>
             <div className="flex items-center gap-4">
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-axos-text-secondary hover:text-axos-accent hover:border-axos-accent/30 hover:bg-axos-accent/5 transition-all duration-300"
+                className="p-2.5 text-axos-text-secondary hover:text-axos-text-primary transition-colors"
                 aria-label="Discord"
               >
                 <MessageSquare size={18} />
               </a>
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-axos-text-secondary hover:text-axos-accent hover:border-axos-accent/30 hover:bg-axos-accent/5 transition-all duration-300"
+                className="p-2.5 text-axos-text-secondary hover:text-axos-text-primary transition-colors"
                 aria-label="GitHub"
               >
                 <GitHubIcon size={18} />
               </a>
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-axos-text-secondary hover:text-axos-accent hover:border-axos-accent/30 hover:bg-axos-accent/5 transition-all duration-300"
+                className="p-2.5 text-axos-text-secondary hover:text-axos-text-primary transition-colors"
                 aria-label="LinkedIn"
               >
                 <LinkedInIcon size={18} />

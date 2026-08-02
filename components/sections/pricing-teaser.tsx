@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { AnimatedSection } from "@/components/animations/animated-section";
 import { RevealHeading } from "@/components/animations/reveal-heading";
-import { Check, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -58,7 +58,6 @@ export function PricingTeaser() {
     () => {
       const mm = gsap.matchMedia();
 
-      // Desktop: pin the section and scrub the three cards to scroll progress.
       mm.add(
         "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -81,7 +80,6 @@ export function PricingTeaser() {
         }
       );
 
-      // Mobile/tablet: simple once-per-card reveal on scroll, no pinning.
       mm.add(
         "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
         () => {
@@ -108,17 +106,16 @@ export function PricingTeaser() {
       className="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-[1280px] mx-auto">
-        <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <AnimatedSection className="max-w-3xl mb-16 md:mb-20">
           <RevealHeading
             text="Custom Software + AI Brain Packages"
             className="font-serif text-3xl sm:text-4xl md:text-5xl text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
           />
-          <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
+          <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed max-w-2xl">
             Packages sized to your operation. Setup covers configuration,
             integration, and training. Ongoing service covers operation and
-            continuous improvement. Talk to us for a quote tailored to your
-            business.
+            continuous improvement.
           </p>
         </AnimatedSection>
 
@@ -126,14 +123,14 @@ export function PricingTeaser() {
           {tiers.map((tier) => (
             <div key={tier.name} className="price-card relative h-full">
               <div
-                className={`relative h-full flex flex-col p-6 md:p-8 rounded-2xl border transition-all duration-500 hover:-translate-y-1 ${
+                className={`relative h-full flex flex-col p-6 md:p-8 rounded-lg border transition-colors duration-300 ${
                   tier.featured
-                    ? "border-axos-accent/30 bg-gradient-to-b from-axos-accent/[0.06] to-axos-accent/[0.02] shadow-[0_8px_32px_-8px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)]"
-                    : "border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.12),0_1px_3px_rgba(0,0,0,0.05)]"
+                    ? "border-axos-accent/30 bg-white"
+                    : "border-black/[0.08] bg-white hover:border-black/15"
                 }`}
               >
                 {tier.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-axos-accent to-axos-accent-hover text-white text-xs font-medium shadow-lg shadow-axos-accent-glow/20">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-md bg-axos-accent text-white text-xs font-medium">
                     Most Popular
                   </div>
                 )}
@@ -153,10 +150,9 @@ export function PricingTeaser() {
                       key={feature}
                       className="flex items-start gap-3 text-sm text-axos-text-secondary"
                     >
-                      <Check
-                        size={16}
-                        className="text-axos-accent mt-0.5 flex-shrink-0"
-                      />
+                      <span className="text-axos-accent mt-0.5 flex-shrink-0">
+                        ✓
+                      </span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -164,9 +160,9 @@ export function PricingTeaser() {
 
                 <a
                   href="/contact"
-                  className={`inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-lg font-medium text-sm transition-all hover:-translate-y-0.5 ${
+                  className={`inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-md text-sm font-medium transition-colors ${
                     tier.featured
-                      ? "bg-axos-accent text-white hover:bg-axos-accent-hover shadow-lg shadow-axos-accent-glow/20"
+                      ? "bg-axos-accent text-white hover:bg-axos-accent-hover"
                       : "border border-axos-border-standard text-axos-text-primary hover:bg-axos-bg-elevated"
                   }`}
                 >

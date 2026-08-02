@@ -8,6 +8,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { GradientMesh } from "@/components/animations/gradient-mesh";
+import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
@@ -24,7 +25,7 @@ export function HeroSection() {
       </motion.div>
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="max-w-4xl">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -33,8 +34,7 @@ export function HeroSection() {
               delay: 0.1,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="font-serif italic text-axos-accent mb-5 tracking-[0.15em] uppercase text-sm"
-            style={{ letterSpacing: "0.2em" }}
+            className="text-axos-text-muted text-sm mb-6 tracking-wide uppercase"
           >
             Persistent AI Brains for Business
           </motion.p>
@@ -47,12 +47,12 @@ export function HeroSection() {
               delay: 0.2,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.05] mb-7"
-            style={{ letterSpacing: "-0.04em" }}
+            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[80px] leading-[1.02] mb-8"
+            style={{ letterSpacing: "-0.03em" }}
           >
-            Own Your Company&#39;s
+            Own Your
             <br />
-            <span className="font-serif italic text-axos-accent">Intelligence</span>
+            Company&#39;s <em className="text-axos-accent">Intelligence</em>
           </motion.h1>
 
           <motion.p
@@ -63,7 +63,7 @@ export function HeroSection() {
               delay: 0.3,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="text-base sm:text-lg md:text-xl text-axos-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-base sm:text-lg text-axos-text-secondary max-w-xl mb-10 leading-relaxed"
           >
             Axos Labs deploys both custom and open-source software to fully
             integrate your business&#39;s intelligence into one AI-native
@@ -78,17 +78,18 @@ export function HeroSection() {
               delay: 0.4,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="flex flex-col sm:flex-row gap-3 justify-center"
+            className="flex flex-col sm:flex-row gap-3"
           >
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-axos-accent-glow active:translate-y-0 active:shadow-none"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-axos-accent text-white text-sm font-medium hover:bg-axos-accent-hover transition-colors"
             >
               Contact Us
+              <ArrowRight size={14} />
             </Link>
             <Link
               href="/about"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-axos-border-standard text-axos-text-primary font-medium hover:bg-axos-bg-elevated/80 hover:border-black/15 transition-all hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-axos-border-standard text-axos-text-primary text-sm font-medium hover:bg-axos-bg-elevated/80 transition-colors"
             >
               Learn More
             </Link>
