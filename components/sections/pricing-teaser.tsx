@@ -72,12 +72,12 @@ export function PricingTeaser() {
               <div
                 className={`relative h-full flex flex-col p-6 md:p-8 rounded-2xl border transition-all duration-500 hover:-translate-y-1 ${
                   tier.featured
-                    ? "border-axos-accent/40 bg-gradient-to-b from-axos-accent/[0.08] to-axos-accent/[0.02] shadow-[0_8px_32px_-8px_rgba(124,58,237,0.25),inset_0_1px_0_rgba(255,255,255,0.08)]"
-                    : "border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)]"
+                    ? "border-axos-accent/30 bg-gradient-to-b from-axos-accent/[0.06] to-axos-accent/[0.02] shadow-[0_8px_32px_-8px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)]"
+                    : "border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.12),0_1px_3px_rgba(0,0,0,0.05)]"
                 }`}
               >
                 {tier.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-axos-accent to-axos-accent-hover text-white text-xs font-medium shadow-lg shadow-axos-accent-glow/30">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-axos-accent to-axos-accent-hover text-white text-xs font-medium shadow-lg shadow-axos-accent-glow/20">
                     Most Popular
                   </div>
                 )}
@@ -111,7 +111,7 @@ export function PricingTeaser() {
                   className={`inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-lg font-medium text-sm transition-all hover:-translate-y-0.5 ${
                     tier.featured
                       ? "bg-axos-accent text-white hover:bg-axos-accent-hover shadow-lg shadow-axos-accent-glow/20"
-                      : "border border-axos-border-standard text-axos-text-primary hover:bg-axos-bg-surface"
+                      : "border border-axos-border-standard text-axos-text-primary hover:bg-axos-bg-elevated"
                   }`}
                 >
                   Get Started

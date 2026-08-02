@@ -3,8 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
-// Vertical beam that draws itself as it scrolls into view — connective
-// tissue between sections so the dark gaps read as one continuous page.
+// Vertical beam that draws itself as it scrolls into view
 export function SectionBeam() {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
@@ -19,11 +18,11 @@ export function SectionBeam() {
     <div ref={ref} aria-hidden className="relative h-20 md:h-32 overflow-hidden">
       <motion.div
         style={{ scaleY: reduceMotion ? 1 : scaleY }}
-        className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-px origin-top bg-gradient-to-b from-transparent via-axos-accent/30 to-axos-accent/60"
+        className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-px origin-top bg-gradient-to-b from-transparent via-axos-accent/20 to-axos-accent/40"
       />
       <motion.div
         style={{ opacity: reduceMotion ? 1 : dotOpacity }}
-        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-1.5 h-1.5 rounded-full bg-axos-accent shadow-[0_0_12px_rgba(124,58,237,0.8)]"
+        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-1.5 h-1.5 rounded-full bg-axos-accent shadow-[0_0_12px_rgba(124,58,237,0.4)]"
       />
     </div>
   );

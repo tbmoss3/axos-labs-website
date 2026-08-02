@@ -141,7 +141,7 @@ export function IntakeForm() {
   const inputClass = (field: keyof FormData) =>
     `w-full rounded-lg border px-4 py-3 bg-axos-bg-elevated text-axos-text-primary placeholder:text-axos-text-muted focus:outline-none focus:ring-2 focus:ring-axos-accent/30 transition-colors ${
       errors[field]
-        ? "border-red-500/50 focus:border-red-500"
+        ? "border-red-400 focus:border-red-500"
         : "border-axos-border-standard focus:border-axos-accent"
     }`;
 
@@ -286,7 +286,7 @@ export function IntakeForm() {
                     className={inputClass("companyName")}
                   />
                   {errors.companyName && (
-                    <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                    <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                       <AlertCircle size={12} />
                       {errors.companyName}
                     </p>
@@ -316,7 +316,7 @@ export function IntakeForm() {
                     />
                   </div>
                   {errors.industry && (
-                    <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                    <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                       <AlertCircle size={12} />
                       {errors.industry}
                     </p>
@@ -348,7 +348,7 @@ export function IntakeForm() {
                     />
                   </div>
                   {errors.companySize && (
-                    <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                    <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                       <AlertCircle size={12} />
                       {errors.companySize}
                     </p>
@@ -367,7 +367,7 @@ export function IntakeForm() {
                     className={inputClass("email")}
                   />
                   {errors.email && (
-                    <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                    <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                       <AlertCircle size={12} />
                       {errors.email}
                     </p>
@@ -431,7 +431,7 @@ export function IntakeForm() {
                         className={`${inputClass("problemDescription")} resize-none`}
                       />
                       {errors.problemDescription && (
-                        <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                        <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                           <AlertCircle size={12} />
                           {errors.problemDescription}
                         </p>
@@ -462,7 +462,7 @@ export function IntakeForm() {
                         className={`${inputClass("workflows")} resize-none`}
                       />
                       {errors.workflows && (
-                        <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                        <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                           <AlertCircle size={12} />
                           {errors.workflows}
                         </p>
@@ -526,7 +526,7 @@ export function IntakeForm() {
                           ))}
                         </div>
                         {errors.deployment && (
-                          <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                          <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                             <AlertCircle size={12} />
                             {errors.deployment}
                           </p>

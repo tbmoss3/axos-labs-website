@@ -129,7 +129,7 @@ export function HowItWorksSection() {
                 </div>
               )}
 
-              <div className="relative h-full flex flex-col p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500">
+              <div className="relative h-full flex flex-col p-6 md:p-8 rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-500">
                 {/* Number badge */}
                 <div className="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-gradient-to-br from-axos-accent to-[#a78bfa] flex items-center justify-center shadow-lg shadow-axos-accent-glow/40">
                   <span className="text-xs font-semibold text-white">
@@ -137,7 +137,7 @@ export function HowItWorksSection() {
                   </span>
                 </div>
 
-                <div className="w-12 h-12 rounded-lg bg-axos-accent/10 border border-axos-accent/20 flex items-center justify-center mb-5 mt-2 group-hover:bg-axos-accent/20 transition-colors">
+                <div className="w-12 h-12 rounded-lg bg-axos-accent/10 border border-axos-accent/15 flex items-center justify-center mb-5 mt-2 group-hover:bg-axos-accent/15 transition-colors">
                   <step.icon size={22} className="text-axos-accent" />
                 </div>
 

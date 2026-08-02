@@ -58,21 +58,21 @@ export function Footer() {
             <div className="flex items-center gap-4">
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-axos-text-secondary hover:text-white hover:border-axos-accent/40 hover:bg-axos-accent/10 transition-all duration-300"
+                className="p-2.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-axos-text-secondary hover:text-axos-accent hover:border-axos-accent/30 hover:bg-axos-accent/5 transition-all duration-300"
                 aria-label="Discord"
               >
                 <MessageSquare size={18} />
               </a>
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-axos-text-secondary hover:text-white hover:border-axos-accent/40 hover:bg-axos-accent/10 transition-all duration-300"
+                className="p-2.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-axos-text-secondary hover:text-axos-accent hover:border-axos-accent/30 hover:bg-axos-accent/5 transition-all duration-300"
                 aria-label="GitHub"
               >
                 <GitHubIcon size={18} />
               </a>
               <a
                 href="#"
-                className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-axos-text-secondary hover:text-white hover:border-axos-accent/40 hover:bg-axos-accent/10 transition-all duration-300"
+                className="p-2.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-axos-text-secondary hover:text-axos-accent hover:border-axos-accent/30 hover:bg-axos-accent/5 transition-all duration-300"
                 aria-label="LinkedIn"
               >
                 <LinkedInIcon size={18} />

@@ -11,33 +11,26 @@ export function GradientMesh({ className }: GradientMeshProps) {
     <div className={cn("absolute inset-0 overflow-hidden", className)}>
       {/* Blob 1 */}
       <div
-        className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full opacity-20 blur-[100px]"
+        className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full opacity-12 blur-[100px]"
         style={{
-          background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)",
+          background: "radial-gradient(circle, #a78bfa 0%, transparent 70%)",
           animation: "blob1 18s ease-in-out infinite",
         }}
       />
       {/* Blob 2 */}
       <div
-        className="absolute top-[30%] -right-[15%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-15 blur-[100px]"
+        className="absolute top-[30%] -right-[15%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full opacity-8 blur-[100px]"
         style={{
-          background: "radial-gradient(circle, #8b5cf6 0%, transparent 70%)",
+          background: "radial-gradient(circle, #ddd6fe 0%, transparent 70%)",
           animation: "blob2 22s ease-in-out infinite",
         }}
       />
       {/* Blob 3 */}
       <div
-        className="absolute -bottom-[10%] left-[20%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full opacity-10 blur-[100px]"
+        className="absolute -bottom-[10%] left-[20%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full opacity-6 blur-[100px]"
         style={{
-          background: "radial-gradient(circle, #a78bfa 0%, transparent 70%)",
+          background: "radial-gradient(circle, #c4b5fd 0%, transparent 70%)",
           animation: "blob3 20s ease-in-out infinite",
-        }}
-      />
-      {/* Subtle noise/overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}
       />
       <style jsx>{`

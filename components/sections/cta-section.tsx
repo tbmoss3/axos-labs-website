@@ -10,10 +10,10 @@ export function CTASection() {
     <section className="relative py-24 md:py-40 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Subtle ambient glow behind the CTA */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-30"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(124, 58, 237, 0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 70%)",
         }}
       />
 
@@ -30,7 +30,7 @@ export function CTASection() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-axos-accent-glow/30 text-base"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-axos-accent text-white font-medium hover:bg-axos-accent-hover transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-axos-accent-glow/20 text-base"
           >
             Contact Us
             <ArrowRight size={18} />

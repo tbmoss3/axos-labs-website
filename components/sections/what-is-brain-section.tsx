@@ -30,7 +30,7 @@ export function WhatIsBrainSection() {
     <section className="py-24 md:py-40 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1280px] mx-auto">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-axos-accent/40 to-transparent mx-auto mb-6" />
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-axos-accent/30 to-transparent mx-auto mb-6" />
           <RevealHeading
             text="What Is a Brain?"
             className="text-3xl sm:text-4xl md:text-5xl font-medium text-axos-text-primary mb-6"
@@ -46,8 +46,8 @@ export function WhatIsBrainSection() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature) => (
             <StaggerItem key={feature.title}>
-              <div className="group relative p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500">
-                <div className="w-12 h-12 rounded-xl bg-axos-accent/10 border border-axos-accent/20 flex items-center justify-center mb-5 group-hover:bg-axos-accent/20 group-hover:scale-105 transition-all duration-500">
+              <div className="group relative p-6 md:p-8 rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-500">
+                <div className="w-12 h-12 rounded-xl bg-axos-accent/10 border border-axos-accent/15 flex items-center justify-center mb-5 group-hover:bg-axos-accent/15 group-hover:scale-105 transition-all duration-500">
                   <feature.icon size={22} className="text-axos-accent" />
                 </div>
                 <h3 className="text-xl font-medium text-axos-text-primary mb-3">

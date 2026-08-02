@@ -3,24 +3,24 @@
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* Axos Labs Color Palette */
-  --color-axos-bg: #0a0a0f;
-  --color-axos-bg-elevated: #1c1c27;
-  --color-axos-bg-surface: #252533;
-  --color-axos-border-subtle: rgba(255, 255, 255, 0.05);
-  --color-axos-border-standard: rgba(255, 255, 255, 0.08);
-  --color-axos-text-primary: #f0f0f5;
-  --color-axos-text-secondary: #a0a0b0;
-  --color-axos-text-muted: #6e6e7e;
+  /* Axos Labs Color Palette — White Minimalist */
+  --color-axos-bg: #fafafa;
+  --color-axos-bg-elevated: #f3f4f6;
+  --color-axos-bg-surface: #ffffff;
+  --color-axos-border-subtle: rgba(0, 0, 0, 0.05);
+  --color-axos-border-standard: rgba(0, 0, 0, 0.08);
+  --color-axos-text-primary: #1a1a2e;
+  --color-axos-text-secondary: #6b7280;
+  --color-axos-text-muted: #9ca3af;
   --color-axos-accent: #7c3aed;
-  --color-axos-accent-hover: #8b5cf6;
-  --color-axos-accent-glow: rgba(124, 58, 237, 0.3);
-  --color-axos-success: #22c55e;
+  --color-axos-accent-hover: #6d28d9;
+  --color-axos-accent-glow: rgba(124, 58, 237, 0.15);
+  --color-axos-success: #16a34a;
 }
 
 :root {
-  --background: #0a0a0f;
-  --foreground: #f0f0f5;
+  --background: #fafafa;
+  --foreground: #1a1a2e;
 }
 
 html {
@@ -35,8 +35,8 @@ body {
 }
 
 ::selection {
-  background: rgba(124, 58, 237, 0.3);
-  color: #ffffff;
+  background: rgba(124, 58, 237, 0.2);
+  color: #1a1a2e;
 }
 
 /* Custom scrollbar */
@@ -45,16 +45,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: #fafafa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
+  background: rgba(124, 58, 237, 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.5);
+  background: rgba(124, 58, 237, 0.35);
 }
 
 /* Gradient mesh blob animations */

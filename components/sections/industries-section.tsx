@@ -57,18 +57,18 @@ export function IndustriesSection() {
         >
           {industries.map((industry) => (
             <StaggerItem key={industry.title}>
-              <div className="group p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_0_1px_rgba(0,0,0,0.2)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 h-full flex flex-col">
+              <div className="group p-6 md:p-8 rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-500 h-full flex flex-col">
                 <div className="flex items-start justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-axos-accent/10 border border-axos-accent/20 flex items-center justify-center group-hover:bg-axos-accent/20 group-hover:scale-105 transition-all duration-500">
+                  <div className="w-12 h-12 rounded-xl bg-axos-accent/10 border border-axos-accent/15 flex items-center justify-center group-hover:bg-axos-accent/15 group-hover:scale-105 transition-all duration-500">
                     <industry.icon size={22} className="text-axos-accent" />
                   </div>
                   <span
                     className={`text-xs font-medium px-2.5 py-1 rounded-full ${
                       industry.status === "Live"
-                        ? "bg-axos-success/10 text-axos-success border border-axos-success/20"
+                        ? "bg-green-50 text-green-700 border border-green-200"
                         : industry.status === "In Build"
                         ? "bg-axos-accent/10 text-axos-accent border border-axos-accent/20"
-                        : "bg-axos-text-muted/10 text-axos-text-muted border border-axos-text-muted/20"
+                        : "bg-gray-100 text-gray-500 border border-gray-200"
                     }`}
                   >
                     {industry.status}

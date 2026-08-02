@@ -35,7 +35,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
-          ? "bg-axos-bg/70 backdrop-blur-2xl border-b border-white/[0.06]"
+          ? "bg-white/80 backdrop-blur-2xl border-b border-black/[0.06] shadow-sm"
           : "bg-transparent"
       )}
     >
@@ -92,7 +92,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-axos-bg/95 backdrop-blur-xl border-t border-axos-border-subtle">
+        <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-axos-border-subtle">
           <div className="px-4 py-6 space-y-4">
             {navLinks.map((link) => (
               <Link

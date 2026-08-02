@@ -22,7 +22,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-axos-bg-elevated/30">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-axos-bg-elevated">
         <div className="max-w-[1280px] mx-auto">
           <AnimatedSection className="max-w-3xl mx-auto">
             <h2
@@ -53,7 +53,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Three Pillars */}
+      {/* Two Pillars */}
       <section className="py-24 md:py-40 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1280px] mx-auto">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
@@ -64,11 +64,11 @@ export default function AboutPage() {
               How We Work
             </h2>
             <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed">
-              Three revenue pillars. One mission.
+              Two revenue pillars. One mission.
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
             {[
               {
                 num: "01",
@@ -80,15 +80,10 @@ export default function AboutPage() {
                 title: "AI Brains",
                 desc: "The core product. End-to-end brain installation and operation. Persistent AI employees that transform how your business runs.",
               },
-              {
-                num: "03",
-                title: "Other Bets",
-                desc: "Acquisitions, ventures, and investments that compound our expertise and expand the Axos ecosystem.",
-              },
             ].map((pillar) => (
               <AnimatedSection key={pillar.num} delay={Number(pillar.num) * 0.1}>
-                <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm hover:border-axos-accent/30 hover:bg-axos-bg-surface/50 transition-all duration-300 hover:-translate-y-1 h-full">
-                  <div className="w-10 h-10 rounded-full bg-axos-accent flex items-center justify-center mb-5 shadow-lg shadow-axos-accent-glow/30">
+                <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-surface hover:border-axos-accent/30 hover:bg-white hover:shadow-lg hover:shadow-axos-accent-glow/10 transition-all duration-300 hover:-translate-y-1 h-full">
+                  <div className="w-10 h-10 rounded-full bg-axos-accent flex items-center justify-center mb-5 shadow-lg shadow-axos-accent-glow/20">
                     <span className="text-xs font-semibold text-white">
                       {pillar.num}
                     </span>
@@ -107,7 +102,7 @@ export default function AboutPage() {
       </section>
 
       {/* Traction */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-axos-bg-elevated/30">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-axos-bg-elevated">
         <div className="max-w-[1280px] mx-auto">
           <AnimatedSection className="max-w-3xl mx-auto mb-12">
             <h2
@@ -120,7 +115,7 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedSection delay={0.1}>
-              <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm">
+              <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-surface">
                 <div className="text-sm font-medium text-axos-accent mb-2">
                   Real Estate Client
                 </div>
@@ -136,7 +131,7 @@ export default function AboutPage() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm">
+              <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-surface">
                 <div className="text-sm font-medium text-axos-accent mb-2">
                   Logistics Client
                 </div>
@@ -152,7 +147,7 @@ export default function AboutPage() {
           </div>
 
           <AnimatedSection delay={0.3} className="mt-8">
-            <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm">
+            <div className="p-6 md:p-8 rounded-xl border border-axos-border-standard bg-axos-bg-surface">
               <div className="text-sm font-medium text-axos-accent mb-2">
                 Pipeline
               </div>
@@ -176,8 +171,8 @@ export default function AboutPage() {
             >
               Built By
             </h2>
-            <div className="p-8 md:p-10 rounded-xl border border-axos-border-standard bg-axos-bg-elevated/50 backdrop-blur-sm inline-block">
-              <div className="w-20 h-20 rounded-full bg-axos-accent/20 border border-axos-accent/30 flex items-center justify-center mx-auto mb-5">
+            <div className="p-8 md:p-10 rounded-xl border border-axos-border-standard bg-axos-bg-surface inline-block hover:shadow-lg hover:shadow-axos-accent-glow/10 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-20 h-20 rounded-full bg-axos-accent/10 border border-axos-accent/20 flex items-center justify-center mx-auto mb-5">
                 <span className="text-2xl font-semibold text-axos-accent">
                   BM
                 </span>

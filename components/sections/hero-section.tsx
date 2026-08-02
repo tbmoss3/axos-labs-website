@@ -88,7 +88,7 @@ export function HeroSection() {
             </Link>
             <Link
               href="/about"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-axos-border-standard text-axos-text-primary font-medium hover:bg-axos-bg-surface/80 hover:border-white/15 transition-all hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-axos-border-standard text-axos-text-primary font-medium hover:bg-axos-bg-elevated/80 hover:border-black/15 transition-all hover:-translate-y-0.5 active:translate-y-0"
             >
               Learn More
             </Link>
