@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { AnimatedSection } from "@/components/animations/animated-section";
 import { RevealHeading } from "@/components/animations/reveal-heading";
+import { WorkflowVisualization } from "@/components/graphics/workflow-visualization";
 import { Download, Settings, Play, TrendingUp } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -145,6 +146,14 @@ export function HowItWorksSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Workflow visualization */}
+        <div className="mt-16 md:mt-20 p-8 rounded-lg border border-black/[0.08] bg-white">
+          <p className="text-[10px] uppercase tracking-wider text-axos-text-muted mb-6">
+            Example: Work Order Resolution
+          </p>
+          <WorkflowVisualization />
         </div>
       </div>
     </section>

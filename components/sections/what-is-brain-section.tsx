@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { AnimatedSection } from "@/components/animations/animated-section";
 import { RevealHeading } from "@/components/animations/reveal-heading";
+import { SystemArchitecture } from "@/components/graphics/system-architecture";
 import { Plug, Brain, Zap } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -94,11 +95,14 @@ export function WhatIsBrainSection() {
             className="font-serif text-3xl sm:text-4xl md:text-5xl text-axos-text-primary mb-6"
             style={{ letterSpacing: "-0.02em" }}
           />
-          <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed max-w-2xl">
+          <p className="text-base md:text-lg text-axos-text-secondary leading-relaxed max-w-2xl mb-12">
             A Brain is not a chatbot. Not a copilot. It is a persistent AI
             employee that lives inside your business, connects to your systems,
             and handles real workflows — end to end, autonomously.
           </p>
+
+          {/* Architecture diagram */}
+          <SystemArchitecture />
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
