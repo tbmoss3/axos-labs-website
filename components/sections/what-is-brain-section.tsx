@@ -43,17 +43,17 @@ export function WhatIsBrainSection() {
           </p>
         </AnimatedSection>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
           {features.map((feature) => (
-            <StaggerItem key={feature.title}>
-              <div className="group relative p-6 md:p-8 rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-500">
+            <StaggerItem key={feature.title} className="h-full">
+              <div className="group relative p-6 md:p-8 rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:border-axos-accent/30 hover:-translate-y-1 hover:shadow-[0_12px_40px_-12px_rgba(124,58,237,0.15),0_1px_3px_rgba(0,0,0,0.05)] transition-all duration-500 h-full flex flex-col">
                 <div className="w-12 h-12 rounded-xl bg-axos-accent/10 border border-axos-accent/15 flex items-center justify-center mb-5 group-hover:bg-axos-accent/15 group-hover:scale-105 transition-all duration-500">
                   <feature.icon size={22} className="text-axos-accent" />
                 </div>
                 <h3 className="text-xl font-medium text-axos-text-primary mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-axos-text-secondary leading-relaxed">
+                <p className="text-sm text-axos-text-secondary leading-relaxed flex-grow">
                   {feature.description}
                 </p>
               </div>

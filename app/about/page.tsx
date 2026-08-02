@@ -29,24 +29,25 @@ export default function AboutPage() {
               className="text-2xl sm:text-3xl md:text-4xl font-medium text-axos-text-primary mb-8"
               style={{ letterSpacing: "-0.02em" }}
             >
-              Our Mission
+              OUR MISSION
             </h2>
             <div className="space-y-6 text-base md:text-lg text-axos-text-secondary leading-relaxed">
-              <p>
-                Every company deserves an AI Brain — a
-                persistent, autonomous worker that understands their business,
-                connects to their systems, and handles the repetitive work that
-                slows teams down.
+              <p className="text-axos-text-primary font-medium">
+                We exist to empower every business with the tools — both custom
+                and open source — to <em className="text-axos-accent font-semibold">own their own intelligence</em>.
               </p>
               <p>
-                We are building the anti-cloud-AI. Private, owned, sovereign AI
-                that runs on YOUR hardware, integrated with YOUR systems,
-                operating under YOUR oversight.
+                What does this mean in practice? We help businesses integrate
+                artificial intelligence into every workflow and process in their
+                business, all on one transparent open platform that gives you
+                control over cost, model usage, code, and processes. This allows
+                our clients to maintain sovereignty over their most sensitive
+                data, processes, and competitive advantages.
               </p>
               <p>
-                Our open-core model means you get the benefits of
-                enterprise-grade AI without surrendering your data to someone
-                else is cloud.
+                We are building privately owned, sovereign AI that runs on YOUR
+                hardware, integrated with YOUR systems, operating under YOUR
+                oversight.
               </p>
             </div>
           </AnimatedSection>
