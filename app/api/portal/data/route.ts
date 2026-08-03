@@ -1,8 +1,18 @@
 export const dynamic = "force-dynamic";
 
-import { auth } from "@clerk/nextjs/server";
 import { clerkEnabled } from "@/lib/clerk";
 import { initDB, getClientByClerkId, getFirstClient, getLatestTelemetry } from "@/lib/db";
+
+// Lazy-load Clerk server auth to avoid crashing when keys are missing
+async function getClerkUserId(): Promise<string | null> {
+  try {
+    const { auth } = await import("@clerk/nextjs/server");
+    const { userId } = await auth();
+    return userId ?? null;
+  } catch {
+    return null;
+  }
+}
 
 export async function GET(request: Request) {
   try {
@@ -11,8 +21,8 @@ export async function GET(request: Request) {
     let client = null;
 
     if (clerkEnabled()) {
-      // Authenticate via Clerk
-      const { userId } = await auth();
+      // Authenticate via Clerk (safe even if keys are missing)
+      const userId = await getClerkUserId();
       if (!userId) {
         return Response.json(
           { error: "Unauthorized. Please sign in." },
