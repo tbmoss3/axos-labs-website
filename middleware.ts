@@ -1,18 +1,37 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { clerkEnabled } from "@/lib/clerk";
 
-const isProtectedRoute = createRouteMatcher(["/portal"]);
+// Lazy-load Clerk middleware to avoid crashing when keys are missing
+let _clerkMiddleware: any = null;
+let _createRouteMatcher: any = null;
 
-export default clerkMiddleware(async (auth, req) => {
+async function getClerkMiddleware() {
+  if (!_clerkMiddleware) {
+    const clerk = await import("@clerk/nextjs/server");
+    _clerkMiddleware = clerk.clerkMiddleware;
+    _createRouteMatcher = clerk.createRouteMatcher;
+  }
+  return { clerkMiddleware: _clerkMiddleware, createRouteMatcher: _createRouteMatcher };
+}
+
+export default async function middleware(req: NextRequest) {
   if (!clerkEnabled()) {
     // Auth not configured — allow all routes
-    return;
+    return NextResponse.next();
   }
 
-  if (isProtectedRoute(req)) {
-    await auth.protect();
-  }
-});
+  const { clerkMiddleware, createRouteMatcher } = await getClerkMiddleware();
+  const isProtectedRoute = createRouteMatcher(["/portal"]);
+
+  const handler = clerkMiddleware(async (auth: any) => {
+    if (isProtectedRoute(req)) {
+      await auth.protect();
+    }
+  });
+
+  return handler(req);
+}
 
 export const config = {
   matcher: [
