@@ -61,7 +61,6 @@ export default function PortalClient() {
     }
   }
 
-  // Show auth prompt when not signed in
   if (!isSignedIn) {
     return (
       <div className="min-h-screen bg-axos-bg pt-24 pb-20 px-4">
@@ -111,7 +110,6 @@ export default function PortalClient() {
   return (
     <div className="min-h-screen bg-axos-bg pt-24 pb-20 px-4">
       <div className="max-w-[1280px] mx-auto">
-        {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -132,7 +130,6 @@ export default function PortalClient() {
           </div>
         </div>
 
-        {/* Error */}
         {error && (
           <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-2">
             <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
@@ -149,19 +146,14 @@ export default function PortalClient() {
           </div>
         )}
 
-        {/* Loading */}
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
             {[...Array(4)].map((_, i) => (
-              <div
-                key={i}
-                className="h-32 rounded-xl bg-white border border-axos-border-subtle animate-pulse"
-              />
+              <div key={i} className="h-32 rounded-xl bg-white border border-axos-border-subtle animate-pulse" />
             ))}
           </div>
         )}
 
-        {/* Stats */}
         {!loading && t && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
             <StatCard
@@ -192,7 +184,6 @@ export default function PortalClient() {
           </div>
         )}
 
-        {/* Actions */}
         {!loading && client && (
           <div className="bg-axos-bg-surface border border-axos-border-subtle rounded-2xl p-8 mb-10">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -220,7 +211,6 @@ export default function PortalClient() {
           </div>
         )}
 
-        {/* Empty / unlinked state */}
         {!loading && !t && !error && (
           <div className="bg-axos-bg-surface border border-axos-border-subtle rounded-2xl p-10 text-center max-w-2xl mx-auto">
             <Zap className="w-12 h-12 text-axos-accent mx-auto mb-4" />
@@ -235,22 +225,16 @@ export default function PortalClient() {
               <ol className="list-decimal list-inside space-y-1">
                 <li>
                   On your Brain machine, run{" "}
-                  <code className="text-xs bg-axos-bg-elevated px-1 py-0.5 rounded">
-                    python reporter.py
-                  </code>
+                  <code className="text-xs bg-axos-bg-elevated px-1 py-0.5 rounded">python reporter.py</code>
                 </li>
                 <li>
                   Ensure{" "}
-                  <code className="text-xs bg-axos-bg-elevated px-1 py-0.5 rounded">
-                    AXOS_TELEMETRY_URL=https://axos.up.railway.app/api/telemetry
-                  </code>{" "}
+                  <code className="text-xs bg-axos-bg-elevated px-1 py-0.5 rounded">AXOS_TELEMETRY_URL=https://axos.up.railway.app/api/telemetry</code>{" "}
                   is set.
                 </li>
                 <li>
                   Ensure{" "}
-                  <code className="text-xs bg-axos-bg-elevated px-1 py-0.5 rounded">
-                    AXOS_CONSOLE_API_KEY
-                  </code>{" "}
+                  <code className="text-xs bg-axos-bg-elevated px-1 py-0.5 rounded">AXOS_CONSOLE_API_KEY</code>{" "}
                   matches your Brain.
                 </li>
               </ol>
@@ -258,7 +242,6 @@ export default function PortalClient() {
           </div>
         )}
 
-        {/* Footer hint */}
         <p className="text-center text-xs text-axos-text-muted mt-12">
           Telemetry refreshes automatically when your Brain pushes updates.
         </p>
