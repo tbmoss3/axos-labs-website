@@ -1,27 +1,45 @@
-import { ClerkProvider } from "@clerk/nextjs";
+"use client";
 
-// A safe wrapper that always provides ClerkProvider so Clerk hooks
-// (useAuth, SignInButton, UserButton) never error at build or runtime.
-// If NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is set, Clerk works normally.
-// If not set, Clerk still mounts but shows a config warning in dev only.
-const DUMMY_KEY = "pk_test_Y2xlcmsjZGVtbzEyMzQ1Njc4OTA";
+import dynamic from "next/dynamic";
+import React from "react";
 
-export function ClerkProviderWrapper({
+// Lazy-load ClerkProvider on client only — prevents SSR crashes when keys missing
+const ClerkProviderClient = dynamic(
+  () =>
+    import("@clerk/nextjs").then((m) => {
+      const RealProvider = m.ClerkProvider;
+      return function WrappedProvider({
+        children,
+        publishableKey,
+      }: {
+        children: React.ReactNode;
+        publishableKey: string;
+      }) {
+        return (
+          <RealProvider publishableKey={publishableKey}>
+            {children}
+          </RealProvider>
+        );
+      };
+    }).catch(() => {
+      // No-op if Clerk fails to load (missing keys)
+      return function NoOpProvider({ children }: { children: React.ReactNode }) {
+        return <>{children}</>;
+      };
+    }),
+  { ssr: false }
+);
+
+export default function ClerkProviderWrapper({
   children,
+  publishableKey,
 }: {
   children: React.ReactNode;
+  publishableKey: string;
 }) {
-  const publishableKey =
-    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || DUMMY_KEY;
-
   return (
-    <ClerkProvider
-      publishableKey={publishableKey}
-      afterSignOutUrl="/"
-      signInUrl="/portal"
-      signUpUrl="/portal"
-    >
+    <ClerkProviderClient publishableKey={publishableKey}>
       {children}
-    </ClerkProvider>
+    </ClerkProviderClient>
   );
 }

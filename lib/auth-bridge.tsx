@@ -98,7 +98,7 @@ function SignUpButton({ mode, children }: { mode?: string; children: React.React
   return <>{children}</>;
 }
 
-function UserButton({ afterSignOutUrl }: { afterSignOutUrl?: string }) {
+function UserButton(props: any) {
   return null;
 }
 

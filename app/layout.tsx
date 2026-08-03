@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MotionProvider } from "@/components/animations/motion-provider";
 import { NeuralBackground } from "@/components/animations/neural-background";
+import ClerkProviderWrapper from "@/components/auth/clerk-provider-wrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,18 +36,6 @@ export const metadata: Metadata = {
   ],
 };
 
-// Lazy-load real ClerkProvider; fallback to no-op bridge when keys missing
-const ClerkProvider = dynamic(
-  () =>
-    import("@clerk/nextjs").then((m) => m.ClerkProvider).catch(() => {
-      // No-op provider if Clerk fails to load
-      return function NoOpProvider({ children }: { children: React.ReactNode }) {
-        return <>{children}</>;
-      };
-    }),
-  { ssr: false }
-);
-
 // Always provide a key so ClerkProvider never crashes at build.
 // A real key on Railway enables actual auth; dummy key keeps builds passing locally.
 const clerkKey =
@@ -60,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider publishableKey={clerkKey}>
+    <ClerkProviderWrapper publishableKey={clerkKey}>
       <html lang="en" className="scroll-smooth">
         <body
           className={`${inter.variable} ${instrumentSerif.variable} font-sans antialiased`}
@@ -75,6 +63,6 @@ export default function RootLayout({
           </MotionProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkProviderWrapper>
   );
 }
