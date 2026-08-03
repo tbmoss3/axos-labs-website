@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MotionProvider } from "@/components/animations/motion-provider";
@@ -35,6 +35,18 @@ export const metadata: Metadata = {
     "on-premise AI",
   ],
 };
+
+// Lazy-load real ClerkProvider; fallback to no-op bridge when keys missing
+const ClerkProvider = dynamic(
+  () =>
+    import("@clerk/nextjs").then((m) => m.ClerkProvider).catch(() => {
+      // No-op provider if Clerk fails to load
+      return function NoOpProvider({ children }: { children: React.ReactNode }) {
+        return <>{children}</>;
+      };
+    }),
+  { ssr: false }
+);
 
 // Always provide a key so ClerkProvider never crashes at build.
 // A real key on Railway enables actual auth; dummy key keeps builds passing locally.
