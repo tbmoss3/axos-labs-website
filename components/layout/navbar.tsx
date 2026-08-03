@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useAuth, SignInButton, UserButton } from "@/lib/auth-bridge";
+import { useAuth, UserButton } from "@/lib/auth-bridge";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 
@@ -73,25 +73,15 @@ export function Navbar() {
 
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center gap-4">
-            {isLoaded && (
-              <>
-                {isSignedIn ? (
-                  <UserButton
-                    afterSignOutUrl="/"
-                    appearance={{
-                      elements: {
-                        userButtonAvatarBox: "w-8 h-8",
-                      },
-                    }}
-                  />
-                ) : (
-                  <SignInButton mode="modal">
-                    <button className="text-sm text-axos-text-secondary hover:text-axos-text-primary transition-colors">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                )}
-              </>
+            {isLoaded && isSignedIn && (
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-8 h-8",
+                  },
+                }}
+              />
             )}
           </div>
 
@@ -122,17 +112,11 @@ export function Navbar() {
             ))}
             {isLoaded && (
               <div className="pt-2 border-t border-axos-border-subtle">
-                {isSignedIn ? (
+                {isSignedIn && (
                   <div className="flex items-center gap-3 py-2">
                     <UserButton afterSignOutUrl="/" />
                     <span className="text-sm text-axos-text-secondary">Account</span>
                   </div>
-                ) : (
-                  <SignInButton mode="modal">
-                    <button className="block w-full text-left py-2 text-base text-axos-text-secondary hover:text-axos-text-primary transition-colors">
-                      Sign In
-                    </button>
-                  </SignInButton>
                 )}
               </div>
             )}
