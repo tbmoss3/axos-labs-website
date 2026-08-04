@@ -155,7 +155,6 @@ export async function POST(request: Request) {
       !body.companyDescription?.trim() ||
       !body.companySize ||
       !body.employeeCount?.trim() ||
-      !body.infraPreference ||
       !body.contactName?.trim() ||
       !body.contactRole?.trim() ||
       !body.contactEmail?.trim() ||
@@ -200,7 +199,7 @@ export async function POST(request: Request) {
       custom_software_json: JSON.stringify(body.customSoftware.filter((s) => s.name.trim())),
       integration_needs: body.integrationNeeds || null,
       data_volume: body.dataVolume || null,
-      infra_preference: body.infraPreference,
+      infra_preference: body.infraPreference || "undecided",
       current_ai_usage: body.currentAIUsage.length > 0 ? body.currentAIUsage : null,
       ai_successes: body.aiSuccesses || null,
       ai_failures: body.aiFailures || null,

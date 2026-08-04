@@ -342,7 +342,7 @@ function validateStep(step: number, form: BrainIntakeForm): string[] {
       }
       break;
     case 4:
-      if (!form.infraPreference) errors.push("Infrastructure preference is required");
+      // Optional step — software and integration vision
       break;
     case 5:
       // Optional step
@@ -595,12 +595,12 @@ function Step2People({ form, dispatch }: { form: BrainIntakeForm; dispatch: Reac
       </div>
 
       <div>
-        <label className={labelClass(false)}>Biggest people pain point</label>
+        <label className={labelClass(false)}>Who are your most critical people and what are their roles?</label>
         <textarea
           value={form.peoplePainPoint}
           onChange={(e) => dispatch({ type: "SET_FIELD", field: "peoplePainPoint", value: e.target.value })}
-          placeholder="If you could clone one employee to solve a problem, who and why?"
-          rows={3}
+          placeholder="e.g. Sarah — Office Manager, handles all vendor coordination and scheduling. Mike — Lead Foreman, makes all field decisions."
+          rows={4}
           className={`${inputClass()} resize-none`}
         />
       </div>
@@ -634,7 +634,7 @@ function Step3Workflows({ form, dispatch }: { form: BrainIntakeForm; dispatch: R
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className={labelClass(true)}>Top Workflows to Automate</label>
+          <label className={labelClass(true)}>Top Processes to Automate</label>
           <button
             type="button"
             onClick={() => dispatch({ type: "ADD_WORKFLOW" })}
@@ -782,8 +782,8 @@ function Step4Software({ form, dispatch }: { form: BrainIntakeForm; dispatch: Re
   return (
     <div className="space-y-6">
       <div>
-        <label className={labelClass(false)}>Search & Add Software</label>
-        <p className="text-xs text-axos-text-muted mb-2">Type to search our database. Click to add.</p>
+        <label className={labelClass(false)}>What software do you currently use in your business?</label>
+        <p className="text-xs text-axos-text-muted mb-2">Type to search our database. Click to add each tool.</p>
         <div className="relative">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-axos-text-muted" />
           <input
@@ -918,60 +918,17 @@ function Step4Software({ form, dispatch }: { form: BrainIntakeForm; dispatch: Re
       </div>
 
       <div>
-        <label className={labelClass(false)}>Integration Pain Points</label>
+        <label className={labelClass(false)}>Describe, in a perfect world, how these softwares would work together for your business</label>
         <textarea
           value={form.integrationNeeds}
           onChange={(e) => dispatch({ type: "SET_FIELD", field: "integrationNeeds", value: e.target.value })}
-          placeholder="What systems need to talk but don't? Manual data entry between tools?"
-          rows={3}
+          placeholder="e.g. When a customer signs a contract in DocuSign, it should automatically create a job in our project management tool, notify the team in Slack, and add the client to our CRM without anyone touching a spreadsheet..."
+          rows={4}
           className={`${inputClass()} resize-none`}
         />
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div>
-          <label className={labelClass(false)}>Monthly Data Volume (estimate)</label>
-          <select
-            value={form.dataVolume}
-            onChange={(e) => dispatch({ type: "SET_FIELD", field: "dataVolume", value: e.target.value })}
-            className={selectClass()}
-          >
-            <option value="">Select</option>
-            <option value="<1gb">&lt; 1 GB</option>
-            <option value="1-10gb">1-10 GB</option>
-            <option value="10-100gb">10-100 GB</option>
-            <option value="100gb+">100+ GB</option>
-            <option value="unsure">Unsure</option>
-          </select>
-        </div>
-        <div>
-          <label className={labelClass(true)}>Infrastructure Preference</label>
-          <div className="space-y-2 mt-2">
-            {infraOptions.map((opt) => (
-              <label key={opt.value} className="flex items-start gap-3 cursor-pointer group">
-                <div className="mt-0.5">
-                  <input
-                    type="radio"
-                    name="infra"
-                    value={opt.value}
-                    checked={form.infraPreference === opt.value}
-                    onChange={(e) => dispatch({ type: "SET_FIELD", field: "infraPreference", value: e.target.value })}
-                    className="sr-only"
-                  />
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                    form.infraPreference === opt.value ? "border-axos-accent" : "border-axos-border-standard group-hover:border-axos-accent/50"
-                  }`}>
-                    {form.infraPreference === opt.value && <div className="w-2.5 h-2.5 rounded-full bg-axos-accent" />}
-                  </div>
-                </div>
-                <span className={`text-sm transition-colors ${form.infraPreference === opt.value ? "text-axos-text-primary" : "text-axos-text-secondary"}`}>
-                  {opt.label}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Data volume and infrastructure removed per user request */}
     </div>
   );
 }
@@ -1023,33 +980,7 @@ function Step5AIPosture({ form, dispatch }: { form: BrainIntakeForm; dispatch: R
         </div>
       </div>
 
-      <div>
-        <label className={labelClass(false)}>Desired Brain Personality</label>
-        <div className="space-y-2 mt-2">
-          {personalityOptions.map((opt) => (
-            <label key={opt.value} className="flex items-start gap-3 cursor-pointer group">
-              <div className="mt-0.5">
-                <input
-                  type="radio"
-                  name="personality"
-                  value={opt.value}
-                  checked={form.desiredPersonality === opt.value}
-                  onChange={(e) => dispatch({ type: "SET_FIELD", field: "desiredPersonality", value: e.target.value })}
-                  className="sr-only"
-                />
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  form.desiredPersonality === opt.value ? "border-axos-accent" : "border-axos-border-standard group-hover:border-axos-accent/50"
-                }`}>
-                  {form.desiredPersonality === opt.value && <div className="w-2.5 h-2.5 rounded-full bg-axos-accent" />}
-                </div>
-              </div>
-              <span className={`text-sm transition-colors ${form.desiredPersonality === opt.value ? "text-axos-text-primary" : "text-axos-text-secondary"}`}>
-                {opt.label}
-              </span>
-            </label>
-          ))}
-        </div>
-      </div>
+      {/* Desired brain personality and budget mindset removed — Q infers from industry + workflows */}
 
       <div>
         <label className={labelClass(false)}>Compliance Requirements</label>
@@ -1072,22 +1003,7 @@ function Step5AIPosture({ form, dispatch }: { form: BrainIntakeForm; dispatch: R
         </div>
       </div>
 
-      <div>
-        <label className={labelClass(false)}>Budget Mindset</label>
-        <select
-          value={form.budgetMindset}
-          onChange={(e) => dispatch({ type: "SET_FIELD", field: "budgetMindset", value: e.target.value })}
-          className={selectClass()}
-        >
-          <option value="">Select</option>
-          <option value="<$2k">&lt; $2K/month</option>
-          <option value="$2-5k">$2-5K/month</option>
-          <option value="$5-15k">$5-15K/month</option>
-          <option value="$15-50k">$15-50K/month</option>
-          <option value="$50k+">$50K+/month</option>
-          <option value="roi-first">Need ROI case first</option>
-        </select>
-      </div>
+      {/* Budget mindset removed — Q infers from workflows + critical functions */}
     </div>
   );
 }
