@@ -48,11 +48,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProviderWrapper publishableKey={clerkKey}>
-      <html lang="en" className="scroll-smooth">
-        <body
-          className={`${inter.variable} ${instrumentSerif.variable} font-sans antialiased`}
-        >
+    <html lang="en" className="scroll-smooth">
+      <body
+        className={`${inter.variable} ${instrumentSerif.variable} font-sans antialiased`}
+      >
+        <ClerkProviderWrapper publishableKey={clerkKey}>
           <MotionProvider>
             <div className="fixed inset-0 -z-10" aria-hidden>
               <NeuralBackground />
@@ -61,8 +61,8 @@ export default function RootLayout({
             <main>{children}</main>
             <Footer />
           </MotionProvider>
-        </body>
-      </html>
-    </ClerkProviderWrapper>
+        </ClerkProviderWrapper>
+      </body>
+    </html>
   );
 }

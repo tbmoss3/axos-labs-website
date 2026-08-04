@@ -1,25 +1,173 @@
 export const dynamic = "force-dynamic";
 
-interface IntakePayload {
-  type: "software" | "brain";
+import { insertBrainIntake, upsertSoftwareSuggestion } from "@/lib/db";
+
+interface BrainIntakePayload {
   companyName: string;
   industry: string;
+  industryOther: string;
+  companyDescription: string;
   companySize: string;
-  systems: string;
-  problemDescription?: string;
-  workflows?: string;
-  hoursPerWeek?: string;
-  deployment?: string;
-  email: string;
-  phone?: string;
+  yearsInBusiness: string;
+  businessModel: string;
+  employeeCount: string;
+  pctSalaried: string;
+  pctOffice: string;
+  techLiteracyLeadership: number;
+  techLiteracyOperations: number;
+  techLiteracyField: number;
+  itStaff: string;
+  peoplePainPoint: string;
+  criticalFunctions: string[];
+  workflows: { id: string; name: string; hoursPerWeek: string; painLevel: number; owner: string }[];
+  bottleneckDescription: string;
+  decisionSpeed: string;
+  selectedSoftware: { name: string; category: string; usageDepth: string }[];
+  customSoftware: { name: string; category: string; purpose: string }[];
+  integrationNeeds: string;
+  dataVolume: string;
+  infraPreference: string;
+  currentAIUsage: string[];
+  aiSuccesses: string;
+  aiFailures: string;
+  desiredPersonality: string;
+  complianceReqs: string[];
+  budgetMindset: string;
+  contactName: string;
+  contactRole: string;
+  contactEmail: string;
+  contactPhone: string;
+  preferredContact: string;
+  urgency: string;
+  referralSource: string;
+  referralOther: string;
+  freeformNotes: string;
+  consentGiven: boolean;
+}
+
+function generateMarkdownFile(data: BrainIntakePayload, intakeId: string): string {
+  const now = new Date().toISOString();
+
+  const workflowsStr = data.workflows
+    .filter((w) => w.name.trim())
+    .map(
+      (w, i) =>
+        `${i + 1}. **${w.name}** — ${w.hoursPerWeek} hrs/week, pain ${w.painLevel}/5, owner: ${w.owner || "unspecified"}`
+    )
+    .join("\n") || "None provided";
+
+  const softwareStr =
+    data.selectedSoftware
+      .map((s) => `- **${s.name}** (${s.category}) — usage: ${s.usageDepth}`)
+      .join("\n") || "None selected";
+
+  const customSoftwareStr =
+    data.customSoftware
+      .filter((s) => s.name.trim())
+      .map((s) => `- **${s.name}** (${s.category}) — ${s.purpose}`)
+      .join("\n") || "None";
+
+  return `---
+intake_id: ${intakeId}
+company: ${data.companyName}
+industry: ${data.industry}${data.industry === "Other" ? ` (${data.industryOther})` : ""}
+size_band: ${data.companySize}
+employees: ${data.employeeCount}
+contact: ${data.contactEmail}
+submitted: ${now}
+infra_preference: ${data.infraPreference}
+urgency: ${data.urgency || "not specified"}
+---
+
+# ${data.companyName} — Brain Architecture Intake
+
+## Business Identity
+${data.companyDescription}
+
+**Years in business:** ${data.yearsInBusiness || "Not specified"}  
+**Business model:** ${data.businessModel || "Not specified"}
+
+## People & Technical Posture
+- **Total employees:** ${data.employeeCount}
+- **Salaried/Hourly mix:** ${data.pctSalaried || 50}% / ${100 - (parseInt(data.pctSalaried) || 50)}%
+- **Office/Field mix:** ${data.pctOffice || 50}% / ${100 - (parseInt(data.pctOffice) || 50)}%
+- **Technical literacy (leadership/ops/field):** ${data.techLiteracyLeadership}/${data.techLiteracyOperations}/${data.techLiteracyField}
+- **IT staff:** ${data.itStaff || "Not specified"}
+- **People pain point:** ${data.peoplePainPoint || "None provided"}
+
+## Critical Functions
+${data.criticalFunctions.map((f) => `- ${f}`).join("\n") || "None selected"}
+
+## Top Workflows to Automate
+${workflowsStr}
+
+## Bottleneck Description
+${data.bottleneckDescription || "None provided"}
+
+## Decision Speed
+${data.decisionSpeed || "Not specified"}
+
+## Software Stack
+### Known Tools
+${softwareStr}
+
+### Custom / Missing Tools
+${customSoftwareStr}
+
+## Integration Needs
+${data.integrationNeeds || "None provided"}
+
+## Data Volume
+${data.dataVolume || "Not specified"}
+
+## AI Posture
+- **Current usage:** ${data.currentAIUsage.join(", ") || "None"}
+- **Successes:** ${data.aiSuccesses || "None provided"}
+- **Failures/Concerns:** ${data.aiFailures || "None provided"}
+- **Desired personality:** ${data.desiredPersonality || "Not specified"}
+- **Compliance requirements:** ${data.complianceReqs.join(", ") || "None"}
+- **Budget mindset:** ${data.budgetMindset || "Not specified"}
+
+## Contact
+- **Name:** ${data.contactName} (${data.contactRole})
+- **Email:** ${data.contactEmail}
+- **Phone:** ${data.contactPhone || "Not provided"}
+- **Preferred contact:** ${data.preferredContact || "Not specified"}
+- **Urgency:** ${data.urgency || "Not specified"}
+- **Referral source:** ${data.referralSource || "Not specified"}${data.referralSource === "other" ? ` (${data.referralOther})` : ""}
+
+## Freeform Notes
+${data.freeformNotes || "None"}
+
+---
+*Axos Labs Brain Architecture Intake — ${now}*
+`;
 }
 
 export async function POST(request: Request) {
   try {
-    const body: IntakePayload = await request.json();
+    const body: BrainIntakePayload = await request.json();
+
+    // Basic validation
+    if (
+      !body.companyName?.trim() ||
+      !body.industry ||
+      !body.companyDescription?.trim() ||
+      !body.companySize ||
+      !body.employeeCount?.trim() ||
+      !body.infraPreference ||
+      !body.contactName?.trim() ||
+      !body.contactRole?.trim() ||
+      !body.contactEmail?.trim() ||
+      !body.consentGiven
+    ) {
+      return Response.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
 
     const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
-
     if (!discordWebhookUrl) {
       return Response.json(
         { error: "DISCORD_WEBHOOK_URL not configured" },
@@ -27,98 +175,127 @@ export async function POST(request: Request) {
       );
     }
 
-    const isBrain = body.type === "brain";
-    const color = isBrain ? 0x7c3aed : 0x22c55e;
-    const title = isBrain
-      ? "🧠 New Brain Request"
-      : "💻 New Software Request";
-
-    const fields = [
-      {
-        name: "Company",
-        value: body.companyName || "Not provided",
-        inline: true,
-      },
-      {
-        name: "Industry",
-        value: body.industry || "Not provided",
-        inline: true,
-      },
-      {
-        name: "Size",
-        value: body.companySize || "Not provided",
-        inline: true,
-      },
-      {
-        name: "Contact",
-        value: `${body.email}${body.phone ? ` | ${body.phone}` : ""}`,
-        inline: false,
-      },
-      {
-        name: isBrain ? "Systems to Connect" : "Systems Used",
-        value: body.systems || "Not provided",
-        inline: false,
-      },
-    ];
-
-    if (isBrain) {
-      fields.push(
-        {
-          name: "Workflows",
-          value: body.workflows || "Not provided",
-          inline: false,
-        },
-        {
-          name: "Repetitive Hours/Week",
-          value: body.hoursPerWeek || "Not provided",
-          inline: true,
-        },
-        {
-          name: "Deployment",
-          value: body.deployment || "Not provided",
-          inline: true,
-        }
-      );
-    } else {
-      fields.push({
-        name: "Problem Description",
-        value: body.problemDescription || "Not provided",
-        inline: false,
-      });
-    }
-
-    const embed = {
-      title,
-      color,
-      fields,
-      timestamp: new Date().toISOString(),
-      footer: {
-        text: "Axos Labs Intake",
-      },
+    // Prepare for DB insert
+    const dbPayload = {
+      company_name: body.companyName,
+      industry: body.industry,
+      industry_other: body.industry === "Other" ? body.industryOther : null,
+      company_description: body.companyDescription,
+      company_size_band: body.companySize,
+      years_in_business: body.yearsInBusiness || null,
+      business_model: body.businessModel || null,
+      employee_count: parseInt(body.employeeCount) || null,
+      pct_salaried: parseInt(body.pctSalaried) || 50,
+      pct_office: parseInt(body.pctOffice) || 50,
+      tech_literacy_leadership: body.techLiteracyLeadership,
+      tech_literacy_operations: body.techLiteracyOperations,
+      tech_literacy_field: body.techLiteracyField,
+      it_staff: body.itStaff || null,
+      people_pain_point: body.peoplePainPoint || null,
+      critical_functions: body.criticalFunctions.length > 0 ? body.criticalFunctions : null,
+      workflows_json: body.workflows,
+      bottleneck_description: body.bottleneckDescription || null,
+      decision_speed: body.decisionSpeed || null,
+      software_json: body.selectedSoftware,
+      custom_software_json: body.customSoftware.filter((s) => s.name.trim()) as unknown as string,
+      integration_needs: body.integrationNeeds || null,
+      data_volume: body.dataVolume || null,
+      infra_preference: body.infraPreference,
+      current_ai_usage: body.currentAIUsage.length > 0 ? body.currentAIUsage : null,
+      ai_successes: body.aiSuccesses || null,
+      ai_failures: body.aiFailures || null,
+      desired_personality: body.desiredPersonality || null,
+      compliance_reqs: body.complianceReqs.length > 0 ? body.complianceReqs : null,
+      budget_mindset: body.budgetMindset || null,
+      contact_name: body.contactName,
+      contact_role: body.contactRole,
+      contact_email: body.contactEmail,
+      contact_phone: body.contactPhone || null,
+      preferred_contact: body.preferredContact || null,
+      urgency: body.urgency || null,
+      referral_source: body.referralSource || null,
+      referral_other: body.referralSource === "other" ? body.referralOther : null,
+      freeform_notes: body.freeformNotes || null,
+      consent_given: body.consentGiven,
+      discord_thread_id: null,
+      status: "new",
+      estimated_tier: null,
     };
 
+    // Insert into DB (skip if no DATABASE_URL configured locally)
+    let intakeId = crypto.randomUUID();
+    if (process.env.DATABASE_URL) {
+      intakeId = await insertBrainIntake(dbPayload);
+
+      // Upsert custom software suggestions
+      for (const sw of body.customSoftware) {
+        if (sw.name.trim()) {
+          await upsertSoftwareSuggestion(sw.name.trim(), sw.category || undefined, intakeId);
+        }
+      }
+    } else {
+      console.warn("DATABASE_URL not set — skipping DB insert (Discord only)");
+    }
+
+    // Build markdown file
+    const markdown = generateMarkdownFile(body, intakeId);
+    const safeFilename = `${body.companyName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}-intake.md`;
+
+    // Discord embed + file attachment
+    const embed = {
+      title: `🧠 ${body.companyName} — Brain Architecture Intake`,
+      color: 0x7c3aed,
+      fields: [
+        { name: "Industry", value: body.industry, inline: true },
+        { name: "Size", value: body.companySize, inline: true },
+        { name: "Employees", value: body.employeeCount, inline: true },
+        { name: "Contact", value: `${body.contactName} — ${body.contactEmail}`, inline: false },
+        { name: "Infra Preference", value: body.infraPreference, inline: true },
+        { name: "Urgency", value: body.urgency || "Not specified", inline: true },
+        {
+          name: "Workflows",
+          value:
+            body.workflows
+              .filter((w) => w.name.trim())
+              .map((w) => `• ${w.name} (${w.hoursPerWeek} hrs/wk)`)
+              .join("\n") || "None",
+          inline: false,
+        },
+      ],
+      timestamp: new Date().toISOString(),
+      footer: { text: `Intake ID: ${intakeId}` },
+    };
+
+    // Discord accepts multipart/form-data with payload_json and file
     const discordPayload = {
-      content: `New ${isBrain ? "Brain" : "Software"} inquiry received!`,
+      content: `New brain architecture intake received — ${body.companyName}`,
       embeds: [embed],
     };
 
+    // Create multipart form
+    const formData = new FormData();
+    formData.append("payload_json", JSON.stringify(discordPayload));
+    formData.append(
+      "file",
+      new Blob([markdown], { type: "text/markdown" }),
+      safeFilename
+    );
+
     const res = await fetch(discordWebhookUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(discordPayload),
+      body: formData,
     });
 
     if (!res.ok) {
       const text = await res.text();
-      return Response.json(
-        { error: "Discord webhook failed", details: text },
-        { status: 502 }
-      );
+      // Log but don't fail — DB insert succeeded
+      console.error("Discord webhook failed:", text);
     }
 
-    return Response.json({ success: true });
+    return Response.json({ success: true, id: intakeId });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
+    console.error("Intake API error:", err);
     return Response.json({ error: message }, { status: 500 });
   }
 }

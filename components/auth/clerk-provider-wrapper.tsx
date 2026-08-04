@@ -1,34 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import React from "react";
-
-// Lazy-load ClerkProvider on client only — prevents SSR crashes when keys missing
-const ClerkProviderClient = dynamic(
-  () =>
-    import("@clerk/nextjs").then((m) => {
-      const RealProvider = m.ClerkProvider;
-      return function WrappedProvider({
-        children,
-        publishableKey,
-      }: {
-        children: React.ReactNode;
-        publishableKey: string;
-      }) {
-        return (
-          <RealProvider publishableKey={publishableKey}>
-            {children}
-          </RealProvider>
-        );
-      };
-    }).catch(() => {
-      // No-op if Clerk fails to load (missing keys)
-      return function NoOpProvider({ children }: { children: React.ReactNode }) {
-        return <>{children}</>;
-      };
-    }),
-  { ssr: false }
-);
+import React, { useState, useEffect } from "react";
 
 export default function ClerkProviderWrapper({
   children,
@@ -37,9 +9,36 @@ export default function ClerkProviderWrapper({
   children: React.ReactNode;
   publishableKey: string;
 }) {
-  return (
-    <ClerkProviderClient publishableKey={publishableKey}>
-      {children}
-    </ClerkProviderClient>
-  );
+  // Placeholder or missing key → skip Clerk entirely (local dev / no auth)
+  const isPlaceholder =
+    !publishableKey ||
+    publishableKey === "pk_test_cGxhY2Vob2xkZXI" ||
+    publishableKey === "pk_test_placeholder";
+
+  if (isPlaceholder) {
+    return <>{children}</>;
+  }
+
+  const [ClerkProvider, setClerkProvider] =
+    useState<React.FC<{ publishableKey: string; children: React.ReactNode }> | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    import("@clerk/nextjs")
+      .then((mod) => {
+        if (!cancelled) setClerkProvider(() => mod.ClerkProvider);
+      })
+      .catch(() => {
+        // Failed to load Clerk → silently skip
+      });
+
+    return () => { cancelled = true; };
+  }, []);
+
+  if (!ClerkProvider) {
+    return <>{children}</>;
+  }
+
+  return <ClerkProvider publishableKey={publishableKey}>{children}</ClerkProvider>;
 }

@@ -29,7 +29,7 @@ export function Navbar() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+    { href: "/brain-architecture", label: "Brain Architecture" },
     { href: "/portal", label: "Portal" },
   ];
 
