@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { insertBrainIntake, upsertSoftwareSuggestion } from "@/lib/db";
+import { insertBrainIntake, upsertSoftwareSuggestion, initDB } from "@/lib/db";
 
 interface BrainIntakePayload {
   companyName: string;
@@ -222,9 +222,10 @@ export async function POST(request: Request) {
       estimated_tier: null,
     };
 
-    // Insert into DB (skip if no DATABASE_URL configured locally)
+    // Insert into DB (ensure tables exist first, skip if no DATABASE_URL locally)
     let intakeId = crypto.randomUUID();
     if (process.env.DATABASE_URL) {
+      await initDB(); // idempotent — creates brain_intakes + software_suggestions if needed
       intakeId = await insertBrainIntake(dbPayload);
 
       // Upsert custom software suggestions

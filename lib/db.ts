@@ -60,6 +60,69 @@ export async function initDB(): Promise<void> {
 
       CREATE INDEX IF NOT EXISTS idx_telemetry_client
         ON brain_telemetry(client_id, reported_at DESC);
+
+      CREATE TABLE IF NOT EXISTS brain_intakes (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        submitted_at TIMESTAMPTZ DEFAULT NOW(),
+        company_name TEXT NOT NULL,
+        industry TEXT NOT NULL,
+        industry_other TEXT,
+        company_description TEXT NOT NULL,
+        company_size_band TEXT NOT NULL,
+        years_in_business TEXT,
+        business_model TEXT,
+        employee_count INTEGER,
+        pct_salaried INTEGER CHECK (pct_salaried BETWEEN 0 AND 100),
+        pct_office INTEGER CHECK (pct_office BETWEEN 0 AND 100),
+        tech_literacy_leadership INTEGER CHECK (tech_literacy_leadership BETWEEN 1 AND 5),
+        tech_literacy_operations INTEGER CHECK (tech_literacy_operations BETWEEN 1 AND 5),
+        tech_literacy_field INTEGER CHECK (tech_literacy_field BETWEEN 1 AND 5),
+        it_staff TEXT,
+        people_pain_point TEXT,
+        critical_functions TEXT[],
+        workflows_json JSONB NOT NULL DEFAULT '[]',
+        bottleneck_description TEXT,
+        decision_speed TEXT,
+        software_json JSONB NOT NULL DEFAULT '[]',
+        custom_software_json JSONB NOT NULL DEFAULT '[]',
+        integration_needs TEXT,
+        data_volume TEXT,
+        infra_preference TEXT NOT NULL,
+        current_ai_usage TEXT[],
+        ai_successes TEXT,
+        ai_failures TEXT,
+        desired_personality TEXT,
+        compliance_reqs TEXT[],
+        budget_mindset TEXT,
+        contact_name TEXT NOT NULL,
+        contact_role TEXT NOT NULL,
+        contact_email TEXT NOT NULL,
+        contact_phone TEXT,
+        preferred_contact TEXT,
+        urgency TEXT,
+        referral_source TEXT,
+        referral_other TEXT,
+        freeform_notes TEXT,
+        consent_given BOOLEAN NOT NULL DEFAULT FALSE,
+        discord_thread_id TEXT,
+        status TEXT DEFAULT 'new' CHECK (status IN ('new', 'reviewing', 'spec_drafted', 'approved', 'archived')),
+        estimated_tier TEXT
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_brain_intakes_status
+        ON brain_intakes(status, submitted_at DESC);
+      CREATE INDEX IF NOT EXISTS idx_brain_intakes_email
+        ON brain_intakes(contact_email);
+
+      CREATE TABLE IF NOT EXISTS software_suggestions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name TEXT NOT NULL UNIQUE,
+        category TEXT,
+        suggested_by_intake UUID REFERENCES brain_intakes(id) ON DELETE SET NULL,
+        count INTEGER DEFAULT 1,
+        added_to_curated BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
     `);
   } finally {
     client.release();
@@ -141,7 +204,7 @@ export async function getLatestTelemetry(
   return result.rows[0] ?? null;
 }
 
-// ── Brain Architecture Intake Tables ─────────────────────────────────────
+// ── Brain Architecture Intake (types + helpers) ────────────────────────────
 
 export interface BrainIntake {
   id: string;
