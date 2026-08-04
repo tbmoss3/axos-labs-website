@@ -46,6 +46,7 @@ interface BrainIntakeForm {
   companySize: string;
   yearsInBusiness: string;
   businessModel: string;
+  uniqueValueProp: string;
   // Step 2
   employeeCount: string;
   pctSalaried: string;
@@ -63,16 +64,13 @@ interface BrainIntakeForm {
   // Step 4
   selectedSoftware: SoftwareItem[];
   customSoftware: { name: string; category: string; purpose: string }[];
+  dataTypesHandled: string;
   integrationNeeds: string;
-  dataVolume: string;
-  infraPreference: string;
   // Step 5
   currentAIUsage: string[];
   aiSuccesses: string;
   aiFailures: string;
-  desiredPersonality: string;
   complianceReqs: string[];
-  budgetMindset: string;
   // Step 6
   contactName: string;
   contactRole: string;
@@ -82,6 +80,7 @@ interface BrainIntakeForm {
   urgency: string;
   referralSource: string;
   referralOther: string;
+  techFrustration: string;
   freeformNotes: string;
   consentGiven: boolean;
 }
@@ -96,6 +95,7 @@ const initialForm: BrainIntakeForm = {
   companySize: "",
   yearsInBusiness: "",
   businessModel: "",
+  uniqueValueProp: "",
   employeeCount: "",
   pctSalaried: "50",
   pctOffice: "50",
@@ -110,15 +110,12 @@ const initialForm: BrainIntakeForm = {
   decisionSpeed: "",
   selectedSoftware: [],
   customSoftware: [],
+  dataTypesHandled: "",
   integrationNeeds: "",
-  dataVolume: "",
-  infraPreference: "",
   currentAIUsage: [],
   aiSuccesses: "",
   aiFailures: "",
-  desiredPersonality: "",
   complianceReqs: [],
-  budgetMindset: "",
   contactName: "",
   contactRole: "",
   contactEmail: "",
@@ -127,6 +124,7 @@ const initialForm: BrainIntakeForm = {
   urgency: "",
   referralSource: "",
   referralOther: "",
+  techFrustration: "",
   freeformNotes: "",
   consentGiven: false,
 };
@@ -489,6 +487,17 @@ function Step1Business({ form, dispatch }: { form: BrainIntakeForm; dispatch: Re
             ))}
           </select>
         </div>
+      </div>
+
+      <div>
+        <label className={labelClass(false)}>What makes your business unique?</label>
+        <textarea
+          value={form.uniqueValueProp}
+          onChange={(e) => dispatch({ type: "SET_FIELD", field: "uniqueValueProp", value: e.target.value })}
+          placeholder="What do you do differently from competitors? Why do customers choose you?"
+          rows={3}
+          className={`${inputClass()} resize-none`}
+        />
       </div>
     </div>
   );
@@ -929,6 +938,17 @@ function Step4Software({ form, dispatch }: { form: BrainIntakeForm; dispatch: Re
       </div>
 
       {/* Data volume and infrastructure removed per user request */}
+
+      <div>
+        <label className={labelClass(false)}>What data or documents does your business generate or handle?</label>
+        <textarea
+          value={form.dataTypesHandled}
+          onChange={(e) => dispatch({ type: "SET_FIELD", field: "dataTypesHandled", value: e.target.value })}
+          placeholder="PDFs, scanned forms, job-site photos, spreadsheets, email threads, CAD files, legal contracts, customer spreadsheets..."
+          rows={3}
+          className={`${inputClass()} resize-none`}
+        />
+      </div>
     </div>
   );
 }
@@ -1113,6 +1133,17 @@ function Step6Contact({ form, dispatch }: { form: BrainIntakeForm; dispatch: Rea
             />
           </motion.div>
         )}
+      </div>
+
+      <div>
+        <label className={labelClass(false)}>What's your biggest frustration with technology today?</label>
+        <textarea
+          value={form.techFrustration}
+          onChange={(e) => dispatch({ type: "SET_FIELD", field: "techFrustration", value: e.target.value })}
+          placeholder="e.g. We have 5 tools that don't talk to each other, or every new system requires months of training..."
+          rows={3}
+          className={`${inputClass()} resize-none`}
+        />
       </div>
 
       <div>

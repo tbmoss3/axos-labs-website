@@ -10,6 +10,7 @@ interface BrainIntakePayload {
   companySize: string;
   yearsInBusiness: string;
   businessModel: string;
+  uniqueValueProp: string;
   employeeCount: string;
   pctSalaried: string;
   pctOffice: string;
@@ -24,15 +25,13 @@ interface BrainIntakePayload {
   decisionSpeed: string;
   selectedSoftware: { name: string; category: string; usageDepth: string }[];
   customSoftware: { name: string; category: string; purpose: string }[];
+  dataTypesHandled: string;
   integrationNeeds: string;
-  dataVolume: string;
   infraPreference: string;
   currentAIUsage: string[];
   aiSuccesses: string;
   aiFailures: string;
-  desiredPersonality: string;
   complianceReqs: string[];
-  budgetMindset: string;
   contactName: string;
   contactRole: string;
   contactEmail: string;
@@ -41,6 +40,7 @@ interface BrainIntakePayload {
   urgency: string;
   referralSource: string;
   referralOther: string;
+  techFrustration: string;
   freeformNotes: string;
   consentGiven: boolean;
 }
@@ -87,18 +87,20 @@ ${data.companyDescription}
 **Years in business:** ${data.yearsInBusiness || "Not specified"}  
 **Business model:** ${data.businessModel || "Not specified"}
 
+**What makes the business unique:** ${data.uniqueValueProp || "Not specified"}
+
 ## People & Technical Posture
 - **Total employees:** ${data.employeeCount}
 - **Salaried/Hourly mix:** ${data.pctSalaried || 50}% / ${100 - (parseInt(data.pctSalaried) || 50)}%
 - **Office/Field mix:** ${data.pctOffice || 50}% / ${100 - (parseInt(data.pctOffice) || 50)}%
 - **Technical literacy (leadership/ops/field):** ${data.techLiteracyLeadership}/${data.techLiteracyOperations}/${data.techLiteracyField}
 - **IT staff:** ${data.itStaff || "Not specified"}
-- **People pain point:** ${data.peoplePainPoint || "None provided"}
+- **Critical people & roles:** ${data.peoplePainPoint || "None provided"}
 
 ## Critical Functions
 ${data.criticalFunctions.map((f) => `- ${f}`).join("\n") || "None selected"}
 
-## Top Workflows to Automate
+## Top Processes to Automate
 ${workflowsStr}
 
 ## Bottleneck Description
@@ -114,19 +116,17 @@ ${softwareStr}
 ### Custom / Missing Tools
 ${customSoftwareStr}
 
-## Integration Needs
-${data.integrationNeeds || "None provided"}
+## Data & Documents
+${data.dataTypesHandled || "Not specified"}
 
-## Data Volume
-${data.dataVolume || "Not specified"}
+## Integration Vision
+${data.integrationNeeds || "None provided"}
 
 ## AI Posture
 - **Current usage:** ${data.currentAIUsage.join(", ") || "None"}
 - **Successes:** ${data.aiSuccesses || "None provided"}
 - **Failures/Concerns:** ${data.aiFailures || "None provided"}
-- **Desired personality:** ${data.desiredPersonality || "Not specified"}
 - **Compliance requirements:** ${data.complianceReqs.join(", ") || "None"}
-- **Budget mindset:** ${data.budgetMindset || "Not specified"}
 
 ## Contact
 - **Name:** ${data.contactName} (${data.contactRole})
@@ -135,6 +135,9 @@ ${data.dataVolume || "Not specified"}
 - **Preferred contact:** ${data.preferredContact || "Not specified"}
 - **Urgency:** ${data.urgency || "Not specified"}
 - **Referral source:** ${data.referralSource || "Not specified"}${data.referralSource === "other" ? ` (${data.referralOther})` : ""}
+
+## Tech Frustration
+${data.techFrustration || "None provided"}
 
 ## Freeform Notes
 ${data.freeformNotes || "None"}
@@ -183,6 +186,7 @@ export async function POST(request: Request) {
       company_size_band: body.companySize,
       years_in_business: body.yearsInBusiness || null,
       business_model: body.businessModel || null,
+      unique_value_prop: body.uniqueValueProp || null,
       employee_count: parseInt(body.employeeCount) || null,
       pct_salaried: parseInt(body.pctSalaried) || 50,
       pct_office: parseInt(body.pctOffice) || 50,
@@ -197,15 +201,13 @@ export async function POST(request: Request) {
       decision_speed: body.decisionSpeed || null,
       software_json: JSON.stringify(body.selectedSoftware),
       custom_software_json: JSON.stringify(body.customSoftware.filter((s) => s.name.trim())),
+      data_types_handled: body.dataTypesHandled || null,
       integration_needs: body.integrationNeeds || null,
-      data_volume: body.dataVolume || null,
       infra_preference: body.infraPreference || "undecided",
       current_ai_usage: body.currentAIUsage.length > 0 ? body.currentAIUsage : null,
       ai_successes: body.aiSuccesses || null,
       ai_failures: body.aiFailures || null,
-      desired_personality: body.desiredPersonality || null,
       compliance_reqs: body.complianceReqs.length > 0 ? body.complianceReqs : null,
-      budget_mindset: body.budgetMindset || null,
       contact_name: body.contactName,
       contact_role: body.contactRole,
       contact_email: body.contactEmail,
@@ -214,6 +216,7 @@ export async function POST(request: Request) {
       urgency: body.urgency || null,
       referral_source: body.referralSource || null,
       referral_other: body.referralSource === "other" ? body.referralOther : null,
+      tech_frustration: body.techFrustration || null,
       freeform_notes: body.freeformNotes || null,
       consent_given: body.consentGiven,
       discord_thread_id: null,

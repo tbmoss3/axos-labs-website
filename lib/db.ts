@@ -71,6 +71,7 @@ export async function initDB(): Promise<void> {
         company_size_band TEXT NOT NULL,
         years_in_business TEXT,
         business_model TEXT,
+        unique_value_prop TEXT,
         employee_count INTEGER,
         pct_salaried INTEGER CHECK (pct_salaried BETWEEN 0 AND 100),
         pct_office INTEGER CHECK (pct_office BETWEEN 0 AND 100),
@@ -85,15 +86,13 @@ export async function initDB(): Promise<void> {
         decision_speed TEXT,
         software_json JSONB NOT NULL DEFAULT '[]',
         custom_software_json JSONB NOT NULL DEFAULT '[]',
+        data_types_handled TEXT,
         integration_needs TEXT,
-        data_volume TEXT,
         infra_preference TEXT NOT NULL,
         current_ai_usage TEXT[],
         ai_successes TEXT,
         ai_failures TEXT,
-        desired_personality TEXT,
         compliance_reqs TEXT[],
-        budget_mindset TEXT,
         contact_name TEXT NOT NULL,
         contact_role TEXT NOT NULL,
         contact_email TEXT NOT NULL,
@@ -102,6 +101,7 @@ export async function initDB(): Promise<void> {
         urgency TEXT,
         referral_source TEXT,
         referral_other TEXT,
+        tech_frustration TEXT,
         freeform_notes TEXT,
         consent_given BOOLEAN NOT NULL DEFAULT FALSE,
         discord_thread_id TEXT,
@@ -216,6 +216,7 @@ export interface BrainIntake {
   company_size_band: string;
   years_in_business: string | null;
   business_model: string | null;
+  unique_value_prop: string | null;
   employee_count: number | null;
   pct_salaried: number | null;
   pct_office: number | null;
@@ -231,14 +232,11 @@ export interface BrainIntake {
   software_json: unknown;
   custom_software_json: unknown;
   integration_needs: string | null;
-  data_volume: string | null;
   infra_preference: string;
   current_ai_usage: string[] | null;
   ai_successes: string | null;
   ai_failures: string | null;
-  desired_personality: string | null;
   compliance_reqs: string[] | null;
-  budget_mindset: string | null;
   contact_name: string;
   contact_role: string;
   contact_email: string;
@@ -247,6 +245,7 @@ export interface BrainIntake {
   urgency: string | null;
   referral_source: string | null;
   referral_other: string | null;
+  tech_frustration: string | null;
   freeform_notes: string | null;
   consent_given: boolean;
   discord_thread_id: string | null;
@@ -297,16 +296,14 @@ export async function initBrainIntakeTables(): Promise<void> {
 
         software_json JSONB NOT NULL DEFAULT '[]',
         custom_software_json JSONB NOT NULL DEFAULT '[]',
+        data_types_handled TEXT,
         integration_needs TEXT,
-        data_volume TEXT,
         infra_preference TEXT NOT NULL,
 
         current_ai_usage TEXT[],
         ai_successes TEXT,
         ai_failures TEXT,
-        desired_personality TEXT,
         compliance_reqs TEXT[],
-        budget_mindset TEXT,
 
         contact_name TEXT NOT NULL,
         contact_role TEXT NOT NULL,
