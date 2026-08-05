@@ -286,6 +286,7 @@ export async function initBrainIntakeTables(): Promise<void> {
         company_size_band TEXT NOT NULL,
         years_in_business TEXT,
         business_model TEXT,
+        unique_value_prop TEXT,
 
         employee_count INTEGER,
         pct_salaried INTEGER CHECK (pct_salaried BETWEEN 0 AND 100),
@@ -300,11 +301,14 @@ export async function initBrainIntakeTables(): Promise<void> {
         workflows_json JSONB NOT NULL DEFAULT '[]',
         bottleneck_description TEXT,
         decision_speed TEXT,
+        process_management TEXT,
 
         software_json JSONB NOT NULL DEFAULT '[]',
         custom_software_json JSONB NOT NULL DEFAULT '[]',
         data_types_handled TEXT,
         integration_needs TEXT,
+        software_satisfaction INTEGER,
+        software_wishlist TEXT,
         infra_preference TEXT NOT NULL,
 
         current_ai_usage TEXT[],
@@ -320,6 +324,7 @@ export async function initBrainIntakeTables(): Promise<void> {
         urgency TEXT,
         referral_source TEXT,
         referral_other TEXT,
+        tech_frustration TEXT,
         freeform_notes TEXT,
         consent_given BOOLEAN NOT NULL DEFAULT FALSE,
 
