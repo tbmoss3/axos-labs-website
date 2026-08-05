@@ -84,10 +84,13 @@ export async function initDB(): Promise<void> {
         workflows_json JSONB NOT NULL DEFAULT '[]',
         bottleneck_description TEXT,
         decision_speed TEXT,
+        process_management TEXT,
         software_json JSONB NOT NULL DEFAULT '[]',
         custom_software_json JSONB NOT NULL DEFAULT '[]',
         data_types_handled TEXT,
         integration_needs TEXT,
+        software_satisfaction INTEGER,
+        software_wishlist TEXT,
         infra_preference TEXT NOT NULL,
         current_ai_usage TEXT[],
         ai_successes TEXT,
@@ -229,9 +232,13 @@ export interface BrainIntake {
   workflows_json: unknown;
   bottleneck_description: string | null;
   decision_speed: string | null;
+  process_management: string | null;
   software_json: unknown;
   custom_software_json: unknown;
+  data_types_handled: string | null;
   integration_needs: string | null;
+  software_satisfaction: number | null;
+  software_wishlist: string | null;
   infra_preference: string;
   current_ai_usage: string[] | null;
   ai_successes: string | null;

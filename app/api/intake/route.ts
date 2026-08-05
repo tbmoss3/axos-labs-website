@@ -23,10 +23,13 @@ interface BrainIntakePayload {
   workflows: { id: string; name: string; hoursPerWeek: string; painLevel: number; owner: string }[];
   bottleneckDescription: string;
   decisionSpeed: string;
+  processManagement: string;
   selectedSoftware: { name: string; category: string; usageDepth: string }[];
   customSoftware: { name: string; category: string; purpose: string }[];
   dataTypesHandled: string;
   integrationNeeds: string;
+  softwareSatisfaction: number;
+  softwareWishlist: string;
   infraPreference: string;
   currentAIUsage: string[];
   aiSuccesses: string;
@@ -45,7 +48,30 @@ interface BrainIntakePayload {
   consentGiven: boolean;
 }
 
-function generateMarkdownFile(data: BrainIntakePayload, intakeId: string): string {
+function computeRecommendation(data: BrainIntakePayload): string {
+  const softwareCount = data.selectedSoftware.length + data.customSoftware.filter((s) => s.name.trim()).length;
+  const mgmt = data.processManagement;
+  const sat = data.softwareSatisfaction;
+
+  if (softwareCount >= 3 && mgmt === "existing-software-clunky" && sat <= 2) {
+    return "Brain Architecture";
+  }
+  if (softwareCount < 2 && mgmt === "spreadsheets-paper") {
+    return "Custom Software";
+  }
+  if (softwareCount >= 2 && softwareCount <= 4 && (mgmt === "mix-both" || sat <= 3)) {
+    return "Blend — Brain + Custom Software";
+  }
+  if (sat >= 4 && softwareCount >= 3) {
+    return "Brain Architecture (automation layer on strong base)";
+  }
+  if (data.softwareWishlist.trim().length > 100) {
+    return "Blend — Brain + Custom Software";
+  }
+  return "Needs Discovery Call";
+}
+
+function generateMarkdownFile(data: BrainIntakePayload, intakeId: string, recommendation: string): string {
   const now = new Date().toISOString();
 
   const workflowsStr = data.workflows
@@ -109,6 +135,9 @@ ${data.bottleneckDescription || "None provided"}
 ## Decision Speed
 ${data.decisionSpeed || "Not specified"}
 
+## Process Management
+${data.processManagement || "Not specified"}
+
 ## Software Stack
 ### Known Tools
 ${softwareStr}
@@ -121,6 +150,12 @@ ${data.dataTypesHandled || "Not specified"}
 
 ## Integration Vision
 ${data.integrationNeeds || "None provided"}
+
+## Software Satisfaction
+${"⭐".repeat(data.softwareSatisfaction)} (${data.softwareSatisfaction}/5)
+
+## Software Wishlist
+${data.softwareWishlist || "None provided"}
 
 ## AI Posture
 - **Current usage:** ${data.currentAIUsage.join(", ") || "None"}
@@ -141,6 +176,9 @@ ${data.techFrustration || "None provided"}
 
 ## Freeform Notes
 ${data.freeformNotes || "None"}
+
+## Q Assessment
+**Recommendation:** ${recommendation}
 
 ---
 *Axos Labs Brain Architecture Intake — ${now}*
@@ -199,10 +237,13 @@ export async function POST(request: Request) {
       workflows_json: JSON.stringify(body.workflows),
       bottleneck_description: body.bottleneckDescription || null,
       decision_speed: body.decisionSpeed || null,
+      process_management: body.processManagement || null,
       software_json: JSON.stringify(body.selectedSoftware),
       custom_software_json: JSON.stringify(body.customSoftware.filter((s) => s.name.trim())),
       data_types_handled: body.dataTypesHandled || null,
       integration_needs: body.integrationNeeds || null,
+      software_satisfaction: body.softwareSatisfaction || null,
+      software_wishlist: body.softwareWishlist || null,
       infra_preference: body.infraPreference || "undecided",
       current_ai_usage: body.currentAIUsage.length > 0 ? body.currentAIUsage : null,
       ai_successes: body.aiSuccesses || null,
@@ -240,8 +281,11 @@ export async function POST(request: Request) {
       console.warn("DATABASE_URL not set — skipping DB insert (Discord only)");
     }
 
+    // Compute recommendation
+    const recommendation = computeRecommendation(body);
+
     // Build markdown file
-    const markdown = generateMarkdownFile(body, intakeId);
+    const markdown = generateMarkdownFile(body, intakeId, recommendation);
     const safeFilename = `${body.companyName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}-intake.md`;
 
     // Discord embed + file attachment
@@ -253,7 +297,8 @@ export async function POST(request: Request) {
         { name: "Size", value: body.companySize, inline: true },
         { name: "Employees", value: body.employeeCount, inline: true },
         { name: "Contact", value: `${body.contactName} — ${body.contactEmail}`, inline: false },
-        { name: "Infra Preference", value: body.infraPreference, inline: true },
+        { name: "Infra Preference", value: body.infraPreference || "undecided", inline: true },
+        { name: "Recommendation", value: recommendation, inline: false },
         { name: "Urgency", value: body.urgency || "Not specified", inline: true },
         {
           name: "Workflows",

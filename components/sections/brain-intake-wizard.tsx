@@ -61,12 +61,14 @@ interface BrainIntakeForm {
   workflows: WorkflowItem[];
   bottleneckDescription: string;
   decisionSpeed: string;
+  processManagement: string;
   // Step 4
   selectedSoftware: SoftwareItem[];
   customSoftware: { name: string; category: string; purpose: string }[];
   dataTypesHandled: string;
   integrationNeeds: string;
-  // Step 5
+  softwareSatisfaction: number;
+  softwareWishlist: string;
   currentAIUsage: string[];
   aiSuccesses: string;
   aiFailures: string;
@@ -108,10 +110,13 @@ const initialForm: BrainIntakeForm = {
   workflows: [{ id: "1", name: "", hoursPerWeek: "", painLevel: 3, owner: "" }],
   bottleneckDescription: "",
   decisionSpeed: "",
+  processManagement: "",
   selectedSoftware: [],
   customSoftware: [],
   dataTypesHandled: "",
   integrationNeeds: "",
+  softwareSatisfaction: 3,
+  softwareWishlist: "",
   currentAIUsage: [],
   aiSuccesses: "",
   aiFailures: "",
@@ -336,8 +341,9 @@ function validateStep(step: number, form: BrainIntakeForm): string[] {
     case 3:
       if (form.criticalFunctions.length === 0) errors.push("Select at least one critical function");
       if (form.workflows.length === 0 || !form.workflows.some((w) => w.name.trim())) {
-        errors.push("Add at least one workflow");
+        errors.push("Add at least one process");
       }
+      if (!form.processManagement) errors.push("Please tell us how your processes are managed");
       break;
     case 4:
       // Optional step — software and integration vision
@@ -756,6 +762,39 @@ function Step3Workflows({ form, dispatch }: { form: BrainIntakeForm; dispatch: R
           <option value="monthly">Monthly or longer</option>
         </select>
       </div>
+
+      <div>
+        <label className={labelClass(true)}>How are your top processes currently managed?</label>
+        <p className="text-xs text-axos-text-muted mb-3">This helps us determine the right approach for your business.</p>
+        <div className="space-y-2">
+          {[
+            { value: "existing-software-clunky", label: "Through existing software — but it's clunky or requires heavy manual work" },
+            { value: "spreadsheets-paper", label: "Through spreadsheets, paper, email, or whiteboards" },
+            { value: "mix-both", label: "Mix of both — some in software, some in spreadsheets/paper" },
+          ].map((opt) => (
+            <label key={opt.value} className="flex items-start gap-3 cursor-pointer group">
+              <div className="mt-0.5">
+                <input
+                  type="radio"
+                  name="processManagement"
+                  value={opt.value}
+                  checked={form.processManagement === opt.value}
+                  onChange={(e) => dispatch({ type: "SET_FIELD", field: "processManagement", value: e.target.value })}
+                  className="sr-only"
+                />
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                  form.processManagement === opt.value ? "border-axos-accent" : "border-axos-border-standard group-hover:border-axos-accent/50"
+                }`}>
+                  {form.processManagement === opt.value && <div className="w-2.5 h-2.5 rounded-full bg-axos-accent" />}
+                </div>
+              </div>
+              <span className={`text-sm transition-colors ${form.processManagement === opt.value ? "text-axos-text-primary" : "text-axos-text-secondary"}`}>
+                {opt.label}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -932,6 +971,41 @@ function Step4Software({ form, dispatch }: { form: BrainIntakeForm; dispatch: Re
           value={form.integrationNeeds}
           onChange={(e) => dispatch({ type: "SET_FIELD", field: "integrationNeeds", value: e.target.value })}
           placeholder="e.g. When a customer signs a contract in DocuSign, it should automatically create a job in our project management tool, notify the team in Slack, and add the client to our CRM without anyone touching a spreadsheet..."
+          rows={4}
+          className={`${inputClass()} resize-none`}
+        />
+      </div>
+
+      <div className="rounded-xl border border-axos-border-subtle bg-axos-bg-elevated p-5">
+        <label className="block text-sm font-medium text-axos-text-secondary mb-3">How satisfied are you with your current software stack?</label>
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => dispatch({ type: "SET_FIELD", field: "softwareSatisfaction", value: n })}
+              className={`flex-1 h-10 rounded text-sm font-medium transition-colors ${
+                form.softwareSatisfaction >= n
+                  ? "bg-axos-accent text-white"
+                  : "bg-axos-bg-surface text-axos-text-muted border border-axos-border-subtle"
+              }`}
+            >
+              {n === 1 ? "Hate it" : n === 3 ? "Okay" : n === 5 ? "Love it" : n}
+            </button>
+          ))}
+        </div>
+        <div className="flex justify-between text-xs text-axos-text-muted mt-1.5">
+          <span>Very dissatisfied</span>
+          <span>Very satisfied</span>
+        </div>
+      </div>
+
+      <div>
+        <label className={labelClass(false)}>What do you WISH your current software could do?</label>
+        <textarea
+          value={form.softwareWishlist}
+          onChange={(e) => dispatch({ type: "SET_FIELD", field: "softwareWishlist", value: e.target.value })}
+          placeholder="e.g. I wish QuickBooks could automatically categorize receipts from photos. I wish Procore would send me a daily digest of all delayed tasks..."
           rows={4}
           className={`${inputClass()} resize-none`}
         />
