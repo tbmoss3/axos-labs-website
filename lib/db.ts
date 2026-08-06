@@ -127,6 +127,20 @@ export async function initDB(): Promise<void> {
         created_at TIMESTAMPTZ DEFAULT NOW()
       );
     `);
+
+    // Migrate older brain_intakes tables: add columns that may be missing
+    await client.query(`
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS unique_value_prop TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS process_management TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS software_satisfaction INTEGER;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS software_wishlist TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS data_types_handled TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS referral_source TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS referral_other TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS tech_frustration TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS freeform_notes TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS estimated_tier TEXT;
+    `);
   } finally {
     client.release();
   }
@@ -347,6 +361,20 @@ export async function initBrainIntakeTables(): Promise<void> {
         added_to_curated BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMPTZ DEFAULT NOW()
       );
+    `);
+
+    // Migrate older brain_intakes tables: add columns that may be missing
+    await client.query(`
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS unique_value_prop TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS process_management TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS software_satisfaction INTEGER;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS software_wishlist TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS data_types_handled TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS referral_source TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS referral_other TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS tech_frustration TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS freeform_notes TEXT;
+      ALTER TABLE brain_intakes ADD COLUMN IF NOT EXISTS estimated_tier TEXT;
     `);
   } finally {
     client.release();
